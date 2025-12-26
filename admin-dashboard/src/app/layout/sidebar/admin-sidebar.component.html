@@ -1,0 +1,21 @@
+
+<aside class="sidebar" [class.is-collapsed]="collapsed">
+    <div class="sidebar__brand">
+      <span class="brand-blue">Dash</span><span class="brand-dark">Stack</span>
+    </div>
+  
+    <nav class="sidebar__nav">
+        <a
+          class="sidebar__item"
+          *ngFor="let item of menu"
+          [routerLink]="item.route"
+          routerLinkActive="is-active"
+          [routerLinkActiveOptions]="{ exact: item.route === '/' }"
+        >
+          <i class="bi sidebar__icon" [ngClass]="item.icon"></i>
+          <span class="sidebar__text">{{ item.label }}</span>
+        </a>
+      </nav>
+      
+  </aside>
+  

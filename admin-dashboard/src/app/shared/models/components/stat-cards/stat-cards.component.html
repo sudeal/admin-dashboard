@@ -1,0 +1,32 @@
+<div class="page">
+    <h2 class="page__title" *ngIf="title">{{ title }}</h2>
+  
+    <ng-container *ngIf="!loading; else skeleton">
+      <div class="stats">
+        <div class="card" *ngFor="let item of cards">
+          <div class="card__top">
+            <div>
+              <div class="card__title">{{ item.title }}</div>
+              <div class="card__value">{{ item.value }}</div>
+            </div>
+  
+            <div class="icon" [ngClass]="'icon--' + item.tone">
+              <i class="bi" [ngClass]="item.icon"></i>
+            </div>
+          </div>
+  
+          <div class="card__desc" [ngClass]="item.trend === 'up' ? 'is-up' : 'is-down'">
+            <i class="bi" [ngClass]="item.trend === 'up' ? 'bi-arrow-up-right' : 'bi-arrow-down-right'"></i>
+            <span>{{ item.description }}</span>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  
+    <ng-template #skeleton>
+      <div class="stats">
+        <div class="card card--skeleton" *ngFor="let _ of [1, 2, 3, 4]"></div>
+      </div>
+    </ng-template>
+  </div>
+  

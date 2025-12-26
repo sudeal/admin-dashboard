@@ -1,0 +1,72 @@
+<div class="page">
+    <div class="page__header">
+      <h2 class="page__title">Product Stock</h2>
+      <div class="search">
+        <i class="bi bi-search search__icon"></i>
+        <input
+          class="search__input"
+          type="text"
+          placeholder="Search product name"
+          (input)="onSearch($any($event.target).value)"
+        />
+      </div>
+    </div>
+
+    <ng-container *ngIf="products$ | async as products; else loading">
+      <div class="table-card">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Image</th>
+              <th>Product Name</th>
+              <th>Category</th>
+              <th>Price</th>
+              <th>Piece</th>
+              <th>Available Color</th>
+              <th class="th-action">Action</th>
+            </tr>
+          </thead>
+  
+          <tbody>
+            <tr
+              *ngFor="let p of products; trackBy: trackById"
+              [class.is-hidden]="query && !p.name.toLowerCase().includes(query)"
+            >
+              <td>
+                <img class="img" [src]="p.imageUrl" [alt]="p.name" />
+              </td>
+  
+              <td class="name">{{ p.name }}</td>
+              <td class="muted">{{ p.category }}</td>
+              <td class="muted">${{ p.price.toFixed(2) }}</td>
+              <td class="muted">{{ p.piece }}</td>
+  
+              <td>
+                <div class="colors">
+                  <span
+                    class="dot"
+                    *ngFor="let c of p.colors"
+                    [style.background]="c"
+                  ></span>
+                </div>
+              </td>
+  
+              <td class="action">
+                <button class="icon-action" type="button" aria-label="Edit">
+                  <i class="bi bi-pencil-square"></i>
+                </button>
+                <button class="icon-action icon-action--danger" type="button" aria-label="Delete">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </ng-container>
+  
+    <ng-template #loading>
+      <div class="table-card table-card--skeleton"></div>
+    </ng-template>
+  </div>
+  

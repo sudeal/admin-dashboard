@@ -1,0 +1,107 @@
+:host {
+    display: block;
+    width: 100%;
+  }
+  
+  /* ✅ Sayfa container - sağdan soldan dayalı, az padding */
+  .dashboard {
+    width: 100%;
+    margin: 0;
+    padding: clamp(12px, 1.5vw, 18px) clamp(16px, 2vw, 22px) 0;
+    box-sizing: border-box;
+  }
+  
+  
+  /* ✅ Panel - responsive, esnek */
+  .panel {
+    width: 100%;
+    margin-top: clamp(12px, 1.5vw, 18px);
+    box-sizing: border-box;
+  
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: clamp(12px, 1.5vw, 14px);
+    box-shadow: 0 clamp(6px, 0.8vw, 10px) clamp(14px, 2vw, 24px) rgba(0, 0, 0, 0.12);
+    color: var(--text);
+  }
+  
+  .panel__header {
+    min-height: clamp(48px, 6vh, 56px);
+    height: auto;
+    padding: clamp(12px, 1.5vw, 16px) clamp(14px, 1.8vw, 18px);
+  
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: clamp(8px, 1vw, 12px);
+  
+    border-bottom: 1px solid var(--border);
+  }
+  
+  .panel__title {
+    margin: 0;
+    font-size: clamp(18px, 2.2vw, 24px);
+    font-weight: 500;
+    color: var(--text);
+  }
+  
+  .panel__filter {
+    height: clamp(28px, 3.5vw, 30px);
+    padding: 0 clamp(10px, 1.2vw, 12px);
+    border-radius: clamp(8px, 1vw, 10px);
+    cursor: pointer;
+  
+    display: inline-flex;
+    align-items: center;
+    gap: clamp(6px, 0.8vw, 8px);
+  
+    font-size: clamp(11px, 1.3vw, 12px);
+    font-weight: 600;
+  
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+  
+    flex-shrink: 0;
+  }
+  
+  .panel__filter:hover {
+    background: color-mix(in srgb, var(--surface) 90%, #000 5%);
+  }
+  
+  .panel__body {
+    padding: clamp(12px, 1.5vw, 16px);
+    box-sizing: border-box;
+  }
+  
+  /* Responsive yükseklikler */
+  .panel__body--sales {
+    min-height: clamp(300px, 40vh, 388px);
+    height: auto;
+  }
+  .panel__body--deals {
+    min-height: clamp(280px, 38vh, 364px);
+    height: auto;
+  }
+  .panel__body--revenue {
+    min-height: clamp(320px, 42vh, 422px);
+    height: auto;
+  }
+  
+  /* ✅ Responsive kırılımlar */
+  @media (max-width: 768px) {
+    .dashboard {
+      padding: clamp(10px, 1.2vw, 14px);
+    }
+  
+    .panel__header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+  
+    .panel__filter {
+      align-self: flex-end;
+    }
+  }
+  

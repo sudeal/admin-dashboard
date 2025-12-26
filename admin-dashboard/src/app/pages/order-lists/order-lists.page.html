@@ -1,0 +1,165 @@
+<div class="page">
+    <h2 class="page__title">Order Lists</h2>
+  
+    <section class="filter-bar" aria-label="Order filters">
+      <button class="filter-bar__icon-btn" type="button" aria-label="Filter">
+        <i class="bi bi-funnel"></i>
+      </button>
+  
+      <div class="filter-bar__item">
+        <span class="filter-bar__label">Filter By</span>
+        <i class="bi bi-chevron-down"></i>
+      </div>
+  
+      
+      <div class="date-wrap">
+        <button class="filter-bar__item" type="button" (click)="toggleDate()">
+          <span class="filter-bar__label">{{ appliedLabel }}</span>
+          <i class="bi bi-chevron-down"></i>
+        </button>
+
+        
+        <div class="date-pop" *ngIf="dateOpen">
+          <div class="date-pop__head">
+            <div class="date-pop__title">Select Date Range</div>
+
+            <button class="date-pop__x" type="button" (click)="closeDate()" aria-label="Close">
+              <i class="bi bi-x"></i>
+            </button>
+          </div>
+
+          <div class="date-pop__body">
+            <div class="date-picker-wrapper">
+              <input
+                #datePickerInput
+                type="text"
+                class="date-input-hidden"
+                placeholder="Select date range"
+                readonly
+              />
+            </div>
+
+            <div class="date-hint">You can choose multiple date</div>
+
+            <div class="date-actions">
+              <button class="btn-ghost" type="button" (click)="clearDate()">Clear</button>
+              <button class="btn-primary" type="button" (click)="applyDate()">Apply Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+     
+      <div class="order-type-wrap">
+        <button class="filter-bar__item" type="button" (click)="toggleOrderType()">
+          <span class="filter-bar__label">{{ orderTypeLabel }}</span>
+          <i class="bi bi-chevron-down"></i>
+        </button>
+
+        
+        <div class="order-type-pop" *ngIf="orderTypeOpen">
+          <div class="order-type-pop__head">
+            <div class="order-type-pop__title">Select Order Type</div>
+
+            <button class="order-type-pop__x" type="button" (click)="closeOrderType()" aria-label="Close">
+              <i class="bi bi-x"></i>
+            </button>
+          </div>
+
+          <div class="order-type-pop__body">
+            <div class="order-type-options">
+              <button
+                *ngFor="let type of orderTypes"
+                type="button"
+                class="order-type-chip"
+                [class.order-type-chip--selected]="selectedOrderTypes.includes(type)"
+                (click)="toggleOrderTypeSelection(type)"
+              >
+                {{ type }}
+              </button>
+            </div>
+
+            <div class="order-type-hint">*You can choose multiple Order type</div>
+
+            <div class="order-type-actions">
+              <button class="btn-ghost" type="button" (click)="clearOrderType()">Clear</button>
+              <button class="btn-primary" type="button" (click)="applyOrderType()">Apply Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="order-status-wrap">
+        <button class="filter-bar__item" type="button" (click)="toggleOrderStatus()">
+          <span class="filter-bar__label">{{ orderStatusLabel }}</span>
+          <i class="bi bi-chevron-down"></i>
+        </button>
+
+        <div class="order-status-pop" *ngIf="orderStatusOpen">
+          <div class="order-status-pop__head">
+            <div class="order-status-pop__title">Select Order Status</div>
+
+            <button class="order-status-pop__x" type="button" (click)="closeOrderStatus()" aria-label="Close">
+              <i class="bi bi-x"></i>
+            </button>
+          </div>
+
+          <div class="order-status-pop__body">
+            <div class="order-status-options">
+              <button
+                *ngFor="let status of orderStatuses"
+                type="button"
+                class="order-status-chip"
+                [class.order-status-chip--selected]="selectedOrderStatuses.includes(status)"
+                (click)="toggleOrderStatusSelection(status)"
+              >
+                {{ status }}
+              </button>
+            </div>
+
+            <div class="order-status-hint">*You can choose multiple Order Status</div>
+
+            <div class="order-status-actions">
+              <button class="btn-ghost" type="button" (click)="clearOrderStatus()">Clear</button>
+              <button class="btn-primary" type="button" (click)="applyOrderStatus()">Apply Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <button class="filter-bar__reset" type="button">
+        <i class="bi bi-arrow-counterclockwise"></i>
+        Reset Filter
+      </button>
+    </section>
+  
+   
+    <section class="table-card">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>NAME</th>
+            <th>ADDRESS</th>
+            <th>DATE</th>
+            <th>TYPE</th>
+            <th class="th-status">STATUS</th>
+          </tr>
+        </thead>
+  
+        <tbody>
+          <tr *ngFor="let row of (orders$ | async); trackBy: trackById">
+            <td class="muted">{{ row.id }}</td>
+            <td class="name">{{ row.name }}</td>
+            <td class="muted">{{ row.address }}</td>
+            <td class="muted">{{ row.date }}</td>
+            <td class="muted">{{ row.type }}</td>
+            <td class="td-status">
+              <span class="badge" [attr.data-status]="row.status">{{ row.status }}</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </div>
+  

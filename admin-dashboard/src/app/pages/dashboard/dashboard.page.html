@@ -1,0 +1,58 @@
+<div class="dashboard">
+    
+    <ng-container *ngIf="stats$ | async as stats; else loading">
+      <app-stat-cards
+        [title]="'Dashboard'"
+        [cards]="stats"
+        [loading]="false"
+      ></app-stat-cards>
+  
+      <section class="panel">
+        <div class="panel__header">
+          <h3 class="panel__title">Sales Details</h3>
+  
+          <button class="panel__filter" type="button">
+            October
+            <i class="bi bi-chevron-down"></i>
+          </button>
+        </div>
+  
+        <div class="panel__body panel__body--sales"></div>
+      </section>
+  
+      <section class="panel">
+        <div class="panel__header">
+          <h3 class="panel__title">Deals Details</h3>
+  
+          <button class="panel__filter" type="button">
+            October
+            <i class="bi bi-chevron-down"></i>
+          </button>
+        </div>
+  
+        <div class="panel__body panel__body--deals"></div>
+      </section>
+  
+      <section class="panel">
+        <div class="panel__header">
+          <h3 class="panel__title">Revenue</h3>
+  
+          <button class="panel__filter" type="button">
+            October
+            <i class="bi bi-chevron-down"></i>
+          </button>
+        </div>
+  
+        <div class="panel__body panel__body--revenue"></div>
+      </section>
+    </ng-container>
+  
+    <ng-template #loading>
+      <app-stat-cards
+        [title]="'dashboard'"
+        [cards]="[]"
+        [loading]="true"
+      ></app-stat-cards>
+    </ng-template>
+  </div>
+  

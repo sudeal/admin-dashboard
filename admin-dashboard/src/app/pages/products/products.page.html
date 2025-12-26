@@ -1,0 +1,62 @@
+<div class="page">
+    <h2 class="page__title">Products</h2>
+  
+    <section class="promo">
+      <div class="promo__top">September 12-22</div>
+  
+      <div class="promo__content">
+        <h3 class="promo__title">Enjoy free home<br />delivery in this summer</h3>
+        <div class="promo__desc">Designer Dresses · Pick from trendy Designer Dress.</div>
+  
+        <button class="promo__cta" type="button">Get Started</button>
+      </div>
+  
+      <button class="promo__nav promo__nav--left" type="button" aria-label="Previous">
+        <i class="bi bi-chevron-left"></i>
+      </button>
+      <button class="promo__nav promo__nav--right" type="button" aria-label="Next">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </section>
+  </div>
+
+  <!-- Promo card üstte aynen kalsın -->
+
+<ng-container *ngIf="products$ | async as products; else loading">
+    <section class="cards">
+      <div class="product-card" *ngFor="let p of products; trackBy: trackById">
+        <div class="product-card__image">
+          <img [src]="p.imageUrl" [alt]="p.name" />
+        </div>
+  
+        <div class="product-card__body">
+          <div class="product-card__name-wrapper">
+            <div class="product-card__name">{{ p.name }}</div>
+            <button class="product-card__fav" type="button" aria-label="Favorite">
+              <i class="bi bi-heart"></i>
+            </button>
+          </div>
+          <div class="product-card__price">${{ p.price.toFixed(2) }}</div>
+
+          <div class="product-card__rating">
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star"></i>
+            <span class="product-card__reviews">(131)</span>
+          </div>
+
+          <button class="product-card__btn" type="button">Edit Product</button>
+        </div>
+      </div>
+    </section>
+  </ng-container>
+  
+  <ng-template #loading>
+    <section class="cards">
+      <div class="product-card product-card--skeleton" *ngFor="let _ of [1,2,3]"></div>
+    </section>
+  </ng-template>
+  
+  

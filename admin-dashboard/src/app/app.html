@@ -1,0 +1,10 @@
+<app-admin-sidebar [collapsed]="sidebarCollapsed()"></app-admin-sidebar>
+
+<app-header
+  (toggleSidebar)="toggleSidebar()"
+  [class.is-collapsed]="sidebarCollapsed()"
+></app-header>
+
+<div class="app-content" [class.is-collapsed]="sidebarCollapsed()">
+  <router-outlet></router-outlet>
+</div>

@@ -1,0 +1,260 @@
+:host {
+    display: block !important;
+    width: 100% !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  
+  .header {
+    width: 100%;
+    height: 70px;
+    min-height: 70px;
+  
+    /* ✅ Theme değişkenleri */
+    background: var(--surface) !important;
+    border-bottom: 2px solid var(--border);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+  
+    /* SAĞDAN KESİLMESİN diye padding-right artırıldı */
+    padding: 0 24px 0 16px;
+  
+    box-sizing: border-box;
+    position: relative;
+    z-index: 100;
+  
+    visibility: visible !important;
+    opacity: 1 !important;
+  
+    /* Kesilme olmasın */
+    overflow: visible;
+  }
+  
+  .header__left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  
+  .header__right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  
+    /* sağ taraf kesilmesin/alt satıra düşmesin */
+    white-space: nowrap;
+  
+    /* ikonları hafif sola çek */
+    margin-right: 300px;
+  }
+  
+  /* Icon buttons */
+  .icon-btn {
+    width: 40px;
+    height: 40px;
+  
+    border: 0;
+    background: transparent;
+    border-radius: 10px;
+    cursor: pointer;
+  
+    display: grid;
+    place-items: center;
+  
+    /* ✅ Theme */
+    color: var(--text);
+    font-size: 20px;
+  }
+  
+  .icon-btn:hover {
+    /* ✅ Theme */
+    background: color-mix(in srgb, var(--surface) 70%, #000000 5%);
+  }
+  
+  /* Search */
+  .search {
+    width: 100%;
+    max-width: 420px;
+    min-width: 200px;
+    height: 40px;
+  
+    /* ✅ Theme */
+    background: color-mix(in srgb, var(--surface) 85%, #000000 6%);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+  
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  
+    padding: 0 14px;
+    box-sizing: border-box;
+  }
+  
+  .search__icon {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1;
+    display: block;
+  }
+  
+  .search__input {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    outline: none;
+    background: transparent;
+  
+    font-size: 13px;
+    color: var(--text);
+  }
+  
+  .search__input::placeholder {
+    color: var(--muted);
+  }
+  
+  /* Notification */
+  .notif {
+    position: relative;
+  }
+  
+  .notif__dot {
+    position: absolute;
+    top: 9px;
+    right: 10px;
+  
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+  
+    background: #ef4444;
+  }
+  
+  /* Language */
+  .lang {
+    height: 40px;
+    padding: 0 10px;
+  
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  
+    /* ✅ Theme */
+    border: 1px solid var(--border);
+    background: var(--surface);
+    border-radius: 12px;
+    cursor: pointer;
+  
+    color: var(--text);
+    font-size: 13px;
+    font-weight: 600;
+  
+    flex-shrink: 0; /* dar alanda sıkışıp kesilmesin */
+  }
+  
+  .lang:hover {
+    background: color-mix(in srgb, var(--surface) 90%, #000000 5%);
+  }
+  
+  .lang__flag-icon {
+    font-size: 18px;
+    color: var(--text);
+    line-height: 1;
+    display: block;
+  }
+  
+  /* Dil alanındaki küçük profil */
+  .lang__avatar {
+    width: 20px;
+    height: 20px;
+    border-radius: 999px;
+  
+    /* ✅ Theme */
+    background: color-mix(in srgb, var(--surface) 80%, #000000 10%);
+  
+    display: grid;
+    place-items: center;
+  
+    color: var(--muted);
+    font-size: 12px;
+    flex-shrink: 0;
+  }
+  
+  .lang__chev {
+    font-size: 12px;
+    color: var(--muted);
+  }
+  
+  /* Profile */
+  .profile {
+    height: 40px;
+    padding: 0 10px;
+  
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  
+    /* ✅ Theme */
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--surface);
+  
+    flex-shrink: 0; /* dar alanda kesilmesin */
+  }
+  
+  .profile__avatar-placeholder {
+    width: 28px;
+    height: 28px;
+    border-radius: 999px;
+  
+    /* ✅ Theme */
+    background: color-mix(in srgb, var(--surface) 80%, #000000 10%);
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    color: var(--muted);
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  
+  .profile__meta {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+  }
+  
+  .profile__name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  
+  .profile__role {
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  
+  .profile__chev {
+    font-size: 12px;
+    color: var(--muted);
+  }
+  
+  /* ✅ color-mix desteklemeyen tarayıcılar için fallback (güvenli) */
+  @supports not (background: color-mix(in srgb, white 50%, black)) {
+    .icon-btn:hover {
+      background: #f3f4f6;
+    }
+    .search {
+      background: #f3f4f6;
+    }
+    .lang:hover {
+      background: #f9fafb;
+    }
+  }
+  
