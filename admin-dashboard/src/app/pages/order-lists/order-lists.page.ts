@@ -5,11 +5,12 @@ import { OrderListsService } from "./order-lists.service";
 import { OrderRow } from "./order.model";
 import { FormsModule } from "@angular/forms";
 import flatpickr from "flatpickr";
+import { RouterModule } from "@angular/router";
 
 @Component({
   selector: "app-order-lists-page",
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: "./order-lists.page.html",
   styleUrl: "./order-lists.page.css",
 })

@@ -1,0 +1,37 @@
+<div class="login-bg">
+    <div class="login-card">
+      <h2 class="login-title">Login to Account</h2>
+      <p class="login-subtitle">
+        Please enter your email and password to continue
+      </p>
+  
+      <label class="field">
+        <span class="field__label">Email address:</span>
+        <input class="field__input" type="email" [(ngModel)]="email" />
+      </label>
+  
+      <label class="field">
+        <div class="field__label-row">
+          <span class="field__label">Password</span>
+          <button class="link" type="button">Forget Password?</button>
+        </div>
+        <input class="field__input" type="password" [(ngModel)]="password" />
+      </label>
+  
+      <label class="remember">
+        <input type="checkbox" [(ngModel)]="remember" />
+        <span>Remember Password</span>
+      </label>
+  
+      <button class="btn-primary" type="button" (click)="onSubmit()">
+        Sign In
+      </button>
+  
+      <div class="bottom">
+        <span class="bottom__text">Don't have an account?</span>
+        <button class="link" type="button" [routerLink]="['/signup']">Create Account</button>
+
+      </div>
+    </div>
+  </div>
+  

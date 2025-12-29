@@ -1,0 +1,113 @@
+<div class="page" *ngIf="order$ | async as order">
+  <div class="page__header">
+    <h2 class="page__title">Order Details</h2>
+
+    <div class="page__header__right">
+      <button class="icon-btn" type="button" (click)="onPrint()" aria-label="Print">
+        <i class="bi bi-printer"></i>
+      </button>
+      <a class="btn btn--ghost" routerLink="/order-lists">Back</a>
+    </div>
+  </div>
+
+  <section class="table-card">
+    <!-- top summary -->
+    <div class="summary">
+      <div class="summary__left">
+        <div class="orderno">Order No: <span>#{{ order.id }}</span></div>
+        <div class="meta">
+          <span class="muted">Date:</span>
+          <span class="strong">{{ order.date }}</span>
+          <span class="dot">•</span>
+          <span class="muted">Type:</span>
+          <span class="strong">{{ order.type }}</span>
+        </div>
+      </div>
+
+      <div class="summary__right">
+        <span class="badge" [attr.data-status]="order.status">{{ order.status }}</span>
+        <span class="badge badge--pay" [attr.data-pay]="order.payment">{{ order.payment }}</span>
+      </div>
+    </div>
+
+    <!-- customer / shipping -->
+    <div class="info">
+      <div class="info__col">
+        <div class="label">Customer</div>
+        <div class="name">{{ order.name }}</div>
+        <div class="muted">{{ order.email }}</div>
+        <div class="muted">{{ order.phone }}</div>
+      </div>
+
+      <div class="info__col">
+        <div class="label">Shipping Address</div>
+        <div class="muted">{{ order.address }}</div>
+        <div class="muted">Turkey</div>
+      </div>
+
+      <div class="info__col info__col--right">
+        <div class="label">Tracking</div>
+        <div class="muted">TRK-{{ order.id }}-A</div>
+        <div class="muted">Carrier: DashStack Express</div>
+      </div>
+    </div>
+
+    <!-- items table -->
+    <div class="table-wrap" *ngIf="items$ | async as items">
+      <table class="table">
+        <thead>
+          <tr>
+            <th class="th-image">Image</th>
+            <th class="th-product">Product</th>
+            <th class="th-category">Category</th>
+            <th class="th-qty">Qty</th>
+            <th class="th-unit">Unit</th>
+            <th class="th-total">Total</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let it of items">
+            <td>
+              <img class="img" [src]="it.imageUrl" [alt]="it.name" />
+            </td>
+            <td class="name">{{ it.name }}</td>
+            <td class="muted">{{ it.category }}</td>
+            <td class="muted">{{ it.qty }}</td>
+            <td class="muted">{{ money(it.unitPrice) }}</td>
+            <td class="strong td-right">{{ money(it.lineTotal) }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- totals -->
+      <div class="bottom">
+        <div class="totals">
+          <div class="row">
+            <span class="muted">Subtotal</span>
+            <span class="strong">{{ money(subtotal(items)) }}</span>
+          </div>
+          <div class="row">
+            <span class="muted">Shipping</span>
+            <span class="strong">{{ money(shipping) }}</span>
+          </div>
+          <div class="row">
+            <span class="muted">Tax</span>
+            <span class="strong">{{ money(taxAmount(subtotal(items))) }}</span>
+          </div>
+          <div class="divider"></div>
+          <div class="row grand">
+            <span class="strong">Total</span>
+            <span class="strong">{{ money(total(subtotal(items))) }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- not found -->
+<div class="page" *ngIf="(order$ | async) === undefined">
+  <h2 class="page__title">Order not found</h2>
+  <a class="btn btn--ghost" routerLink="/order-lists">Back to Order Lists</a>
+</div>

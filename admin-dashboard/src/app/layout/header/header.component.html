@@ -34,15 +34,25 @@
       </button>
   
       <!-- Profile -->
-      <div class="profile">
-        <div class="profile__avatar-placeholder">
-          <i class="bi bi-person-fill"></i>
+      <div class="profile-wrapper">
+        <button class="profile" type="button" (click)="toggleProfileMenu()" aria-label="Profile menu">
+          <div class="profile__avatar-placeholder">
+            <i class="bi bi-person-fill"></i>
+          </div>
+          <div class="profile__meta">
+            <div class="profile__name">Moni Roy</div>
+            <div class="profile__role">Admin</div>
+          </div>
+          <i class="bi bi-chevron-down profile__chev" [class.rotated]="profileMenuOpen"></i>
+        </button>
+
+        <!-- Dropdown Menu -->
+        <div class="profile-menu" *ngIf="profileMenuOpen" (click)="$event.stopPropagation()">
+          <button class="profile-menu__item" type="button" (click)="onLogout()">
+            <i class="bi bi-box-arrow-right"></i>
+            <span>Logout</span>
+          </button>
         </div>
-        <div class="profile__meta">
-          <div class="profile__name">Moni Roy</div>
-          <div class="profile__role">Admin</div>
-        </div>
-        <i class="bi bi-chevron-down profile__chev"></i>
       </div>
 
       <!-- Theme Toggle -->

@@ -1,0 +1,39 @@
+<div class="auth-bg">
+    <div class="auth-card">
+      <h2 class="title">Create an Account</h2>
+      <p class="subtitle">Create a account to continue</p>
+  
+      <label class="field">
+        <span class="field__label">Email address:</span>
+        <input class="field__input" type="email" [(ngModel)]="email" />
+      </label>
+  
+      <label class="field">
+        <span class="field__label">Username</span>
+        <input class="field__input" type="text" placeholder="Username" [(ngModel)]="username" />
+      </label>
+  
+      <label class="field">
+        <div class="field__label-row">
+          <span class="field__label">Password</span>
+          <button class="link" type="button">Forget Password?</button>
+        </div>
+        <input class="field__input" type="password" [(ngModel)]="password" />
+      </label>
+  
+      <label class="check">
+        <input type="checkbox" [(ngModel)]="acceptTerms" />
+        <span>I accept terms and conditions</span>
+      </label>
+  
+      <button class="btn-primary" type="button" (click)="onSubmit()" [disabled]="!acceptTerms">
+        Sign Up
+      </button>
+  
+      <div class="bottom">
+        <span class="bottom__text">Already have an account?</span>
+        <a class="link" [routerLink]="['/login']">Login</a>
+      </div>
+    </div>
+  </div>
+  

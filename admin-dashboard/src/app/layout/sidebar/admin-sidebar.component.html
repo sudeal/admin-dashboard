@@ -10,7 +10,6 @@
           *ngFor="let item of menu"
           [routerLink]="item.route"
           routerLinkActive="is-active"
-          [routerLinkActiveOptions]="{ exact: item.route === '/' }"
         >
           <i class="bi sidebar__icon" [ngClass]="item.icon"></i>
           <span class="sidebar__text">{{ item.label }}</span>

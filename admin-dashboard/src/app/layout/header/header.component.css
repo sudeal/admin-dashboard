@@ -189,6 +189,11 @@
   }
   
   /* Profile */
+  .profile-wrapper {
+    position: relative;
+    flex-shrink: 0;
+  }
+
   .profile {
     height: 40px;
     padding: 0 10px;
@@ -201,8 +206,12 @@
     border: 1px solid var(--border);
     border-radius: 12px;
     background: var(--surface);
-  
-    flex-shrink: 0; /* dar alanda kesilmesin */
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+
+  .profile:hover {
+    background: color-mix(in srgb, var(--surface) 90%, #000000 5%);
   }
   
   .profile__avatar-placeholder {
@@ -243,6 +252,56 @@
   .profile__chev {
     font-size: 12px;
     color: var(--muted);
+    transition: transform 0.2s ease;
+  }
+
+  .profile__chev.rotated {
+    transform: rotate(180deg);
+  }
+
+  /* Profile Dropdown Menu */
+  .profile-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 160px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 8px;
+    z-index: 1000;
+    box-sizing: border-box;
+  }
+
+  .profile-menu__item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border: 0;
+    background: transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    color: var(--text);
+    font-size: 13px;
+    font-weight: 600;
+    text-align: left;
+    transition: background 0.2s ease;
+  }
+
+  .profile-menu__item:hover {
+    background: color-mix(in srgb, var(--surface) 80%, #000000 8%);
+  }
+
+  .profile-menu__item i {
+    font-size: 16px;
+    color: var(--muted);
+  }
+
+  .profile-menu__item:hover i {
+    color: var(--text);
   }
   
   /* ✅ color-mix desteklemeyen tarayıcılar için fallback (güvenli) */

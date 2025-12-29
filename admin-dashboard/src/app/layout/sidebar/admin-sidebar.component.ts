@@ -8,7 +8,8 @@ type MenuKey =
   | "favorites"
   | "inbox"
   | "order-lists"
-  | "product-stock";
+  | "product-stock"
+  | "order-details";
 
 type MenuItem = {
   key: MenuKey;
@@ -37,7 +38,7 @@ export class AdminSidebarComponent {
   activeKey: MenuKey = "dashboard";
 
   menu: MenuItem[] = [
-    { key: "dashboard", label: "Dashboard", icon: "bi-speedometer", route: "/" },
+    { key: "dashboard", label: "Dashboard", icon: "bi-speedometer", route: "/dashboard" },
     { key: "products", label: "Products", icon: "bi-grid", route: "/products" },
 
     // Şimdilik route'ları placeholder bırakıyorum; ileride sayfaları açınca güncellersin:
@@ -45,6 +46,7 @@ export class AdminSidebarComponent {
     { key: "inbox", label: "Inbox", icon: "bi-chat-left", route: "/inbox" },
     { key: "order-lists", label: "Order Lists", icon: "bi-list-check", route: "/order-lists" },
     { key: "product-stock", label: "Product Stock", icon: "bi-file-earmark-text", route: "/product-stock" },
+    { key: "order-details", label: "Order Details", icon: "bi-file-text", route: "/order-details" },
   ];
 
   // Eski setActive fonksiyonunu istersen silebilirsin.
