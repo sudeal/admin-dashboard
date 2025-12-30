@@ -10,7 +10,7 @@
         <input class="field__input" type="email" [(ngModel)]="email" />
       </label>
   
-      <!-- Normal Login Fields -->
+      
       <ng-container *ngIf="!forgotPasswordMode">
         <label class="field">
           <div class="field__label-row">
@@ -30,15 +30,15 @@
         </button>
       </ng-container>
 
-      <!-- Forgot Password Fields -->
+      
       <ng-container *ngIf="forgotPasswordMode">
         <label class="field">
-          <span class="field__label">Yeni şifre oluştur:</span>
+          <span class="field__label">Create new password:</span>
           <input class="field__input" type="password" [(ngModel)]="newPassword" />
         </label>
 
         <label class="field">
-          <span class="field__label">Yeni şifreyi tekrar gir:</span>
+          <span class="field__label">Enter the new password again:</span>
           <input class="field__input" type="password" [(ngModel)]="confirmPassword" />
         </label>
 
@@ -69,6 +69,24 @@
         </div>
         <div class="modal-footer">
           <button class="btn-primary" type="button" (click)="closeModal()">Tamam</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Password Error Modal -->
+    <div class="modal-overlay" *ngIf="showPasswordErrorModal" (click)="closePasswordErrorModal()">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+          <h3 class="modal-title">Password Reset Failed</h3>
+          <button class="modal-close" type="button" (click)="closePasswordErrorModal()" aria-label="Close">
+            <i class="bi bi-x"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p class="modal-message">Password creation failed. Please try again.</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-primary" type="button" (click)="closePasswordErrorModal()">Tamam</button>
         </div>
       </div>
     </div>

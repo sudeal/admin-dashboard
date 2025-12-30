@@ -16,6 +16,7 @@ export class LoginPage {
   password = "";
   remember = true;
   showErrorModal = false;
+  showPasswordErrorModal = false;
   forgotPasswordMode = false;
   newPassword = "";
   confirmPassword = "";
@@ -48,13 +49,28 @@ export class LoginPage {
     this.showErrorModal = false;
   }
 
+  closePasswordErrorModal() {
+    this.showPasswordErrorModal = false;
+  }
+
   onForgetPassword() {
     this.forgotPasswordMode = true;
   }
 
   onSubmitNewPassword() {
-    // Şifre sıfırlama işlemi burada yapılabilir
-    // Şimdilik sadece login sayfasına geri dönüyoruz
+    
+    if (this.email.trim() === "" || !this.isValidEmail(this.email)) {
+      this.showPasswordErrorModal = true;
+      return;
+    }
+
+    
+    if (this.newPassword !== this.confirmPassword) {
+      this.showPasswordErrorModal = true;
+      return;
+    }
+
+  
     this.forgotPasswordMode = false;
     this.newPassword = "";
     this.confirmPassword = "";

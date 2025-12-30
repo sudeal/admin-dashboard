@@ -11,23 +11,24 @@ import { InboxPage } from './pages/inbox/inbox.page';
 import { FavoritesPage } from './pages/favorites/favorites.page';
 import { NotFoundPage } from './pages/not-found/not-found.page';
 
-
-
 export const routes: Routes = [
-    { path: '', redirectTo: 'login', pathMatch: 'full' }, 
+  { path: '', redirectTo: 'login', pathMatch: 'full', title: 'Login' },
 
-  
-  { path: 'login', component: LoginPage }, 
-  { path: 'dashboard', component: DashboardPage },
-  { path: 'products', component: ProductsPage },
-  { path: 'product-stock', component: ProductStockPage },
-  { path: 'order-lists', component: OrderListsPage },
-  { path: 'order-details', redirectTo: '/order-lists', pathMatch: 'full' },
-  { path: 'order-details/:id', component: OrderDetailsPage },
-  { path: 'signup', component: SignupPage },
-  { path: 'inbox', component: InboxPage },
-  { path: 'favorites', component: FavoritesPage },
-  { path: '404notfound', component: NotFoundPage },
+  { path: 'login', component: LoginPage, title: 'Login' },
+  { path: 'signup', component: SignupPage, title: 'Create Account' },
 
-  { path: '**', component: NotFoundPage },
-];   
+  { path: 'dashboard', component: DashboardPage, title: 'Admin Dashboard' },
+  { path: 'products', component: ProductsPage, title: 'Products' },
+  { path: 'product-stock', component: ProductStockPage, title: 'Product Stock' },
+  { path: 'order-lists', component: OrderListsPage, title: 'Order Lists' },
+
+  { path: 'order-details', redirectTo: '/order-lists', pathMatch: 'full', title: 'Order Lists' },
+  { path: 'order-details/:id', component: OrderDetailsPage, title: 'Order Details' },
+
+  { path: 'inbox', component: InboxPage, title: 'Inbox' },
+  { path: 'favorites', component: FavoritesPage, title: 'Favorites' },
+
+  { path: '404notfound', component: NotFoundPage, title: 'Not Found' },
+
+  { path: '**', component: NotFoundPage, title: 'Not Found' },
+];

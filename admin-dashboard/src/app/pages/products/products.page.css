@@ -4,7 +4,7 @@
   }
   
   .page {
-    padding: clamp(12px, 1.5vw, 18px) clamp(16px, 2vw, 22px) 0;
+    padding: clamp(12px, 1.5vw, 18px) clamp(16px, 2vw, 22px) 0 clamp(16px, 2vw, 22px);
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -46,7 +46,7 @@
   
   .promo__top {
     position: relative;
-    padding: clamp(20px, 2.5vw, 28px) clamp(20px, 2.5vw, 44px) 0 clamp(20px, 5vw, 90px);
+    padding: clamp(20px, 2.5vw, 28px) clamp(20px, 2.5vw, 44px) 0 clamp(20px, 2.5vw, 44px);
     font-size: clamp(11px, 1.3vw, 12px);
     font-weight: 700;
     opacity: 0.95;
@@ -54,7 +54,7 @@
   
   .promo__content {
     position: relative;
-    padding: clamp(6px, 0.8vw, 8px) clamp(20px, 2.5vw, 44px) 0 clamp(20px, 5vw, 90px);
+    padding: clamp(6px, 0.8vw, 8px) clamp(20px, 2.5vw, 44px) 0 clamp(20px, 2.5vw, 44px);
     max-width: clamp(300px, 40vw, 520px);
   }
   
@@ -119,6 +119,8 @@
   /* Kartların dizileceği alan - responsive grid */
   .cards {
     margin-top: clamp(12px, 1.5vw, 18px);
+    padding: 0 clamp(16px, 2vw, 22px);
+    box-sizing: border-box;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(clamp(280px, 30vw, 361px), 1fr));
     gap: clamp(12px, 1.5vw, 18px);
@@ -259,21 +261,37 @@
   }
 
   @media (max-width: 768px) {
+    .page {
+      padding-left: clamp(12px, 2vw, 16px);
+      padding-right: clamp(12px, 2vw, 16px);
+    }
+
     .promo__top {
       padding-left: clamp(16px, 3vw, 20px);
+      padding-right: clamp(16px, 3vw, 20px);
     }
 
     .promo__content {
       padding-left: clamp(16px, 3vw, 20px);
+      padding-right: clamp(16px, 3vw, 20px);
     }
 
     .cards {
+      padding-left: clamp(12px, 2vw, 16px);
+      padding-right: clamp(12px, 2vw, 16px);
       grid-template-columns: repeat(auto-fit, minmax(clamp(220px, 45vw, 300px), 1fr));
     }
   }
 
   @media (max-width: 480px) {
+    .page {
+      padding-left: clamp(12px, 2vw, 16px);
+      padding-right: clamp(12px, 2vw, 16px);
+    }
+
     .cards {
+      padding-left: clamp(12px, 2vw, 16px);
+      padding-right: clamp(12px, 2vw, 16px);
       grid-template-columns: 1fr;
     }
 
