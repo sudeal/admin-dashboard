@@ -15,6 +15,34 @@ export class HeaderComponent {
 
   searchValue = "";
   profileMenuOpen = false;
+  notificationMenuOpen = false;
+
+  notifications = [
+    {
+      icon: 'bi-gear',
+      iconBg: '#3b82f6',
+      title: 'Settings',
+      description: 'Update Dashboard'
+    },
+    {
+      icon: 'bi-calendar',
+      iconBg: '#ec4899',
+      title: 'Event Update',
+      description: 'An event date update again'
+    },
+    {
+      icon: 'bi-person',
+      iconBg: '#8b5cf6',
+      title: 'Profile',
+      description: 'Update your profile'
+    },
+    {
+      icon: 'bi-exclamation-triangle',
+      iconBg: '#ef4444',
+      title: 'Application Error',
+      description: 'Check Your running application'
+    }
+  ];
 
   constructor(public themeService: ThemeService, private router: Router) {}
 
@@ -32,6 +60,16 @@ export class HeaderComponent {
 
   toggleProfileMenu() {
     this.profileMenuOpen = !this.profileMenuOpen;
+    if (this.profileMenuOpen) {
+      this.notificationMenuOpen = false;
+    }
+  }
+
+  toggleNotificationMenu() {
+    this.notificationMenuOpen = !this.notificationMenuOpen;
+    if (this.notificationMenuOpen) {
+      this.profileMenuOpen = false;
+    }
   }
 
   onLogout() {
@@ -44,6 +82,9 @@ export class HeaderComponent {
     const target = event.target as HTMLElement;
     if (!target.closest(".profile-wrapper")) {
       this.profileMenuOpen = false;
+    }
+    if (!target.closest(".notification-wrapper")) {
+      this.notificationMenuOpen = false;
     }
   }
 }

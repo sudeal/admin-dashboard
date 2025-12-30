@@ -9,6 +9,7 @@ import { LoginPage } from './pages/login/login.page';
 import { SignupPage } from './pages/signup/signup.page';
 import { InboxPage } from './pages/inbox/inbox.page';
 import { FavoritesPage } from './pages/favorites/favorites.page';
+import { NotFoundPage } from './pages/not-found/not-found.page';
 
 
 
@@ -26,6 +27,7 @@ export const routes: Routes = [
   { path: 'signup', component: SignupPage },
   { path: 'inbox', component: InboxPage },
   { path: 'favorites', component: FavoritesPage },
+  { path: '404notfound', component: NotFoundPage },
 
-  { path: '**', redirectTo: 'login' },
+  { path: '**', component: NotFoundPage },
 ];   

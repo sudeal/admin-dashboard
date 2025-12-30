@@ -15,11 +15,26 @@ export class SignupPage {
   username = "";
   password = "";
   acceptTerms = false;
+  showErrorModal = false;
 
   constructor(private router: Router) {}
 
+  isValidEmail(email: string): boolean {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
+
   onSubmit() {
-    // şimdilik fake signup -> login sayfasına dön
+    if (!this.isValidEmail(this.email)) {
+      this.showErrorModal = true;
+      return;
+    }
+
+   
     this.router.navigateByUrl("/login");
+  }
+
+  closeModal() {
+    this.showErrorModal = false;
   }
 }

@@ -1,8 +1,8 @@
 <div class="login-bg">
     <div class="login-card">
-      <h2 class="login-title">Login to Account</h2>
+      <h2 class="login-title">{{ forgotPasswordMode ? 'Reset Password' : 'Login to Account' }}</h2>
       <p class="login-subtitle">
-        Please enter your email and password to continue
+        {{ forgotPasswordMode ? 'Please enter your new password' : 'Please enter your email and password to continue' }}
       </p>
   
       <label class="field">
@@ -10,27 +10,66 @@
         <input class="field__input" type="email" [(ngModel)]="email" />
       </label>
   
-      <label class="field">
-        <div class="field__label-row">
-          <span class="field__label">Password</span>
-          <button class="link" type="button">Forget Password?</button>
-        </div>
-        <input class="field__input" type="password" [(ngModel)]="password" />
-      </label>
+      <!-- Normal Login Fields -->
+      <ng-container *ngIf="!forgotPasswordMode">
+        <label class="field">
+          <div class="field__label-row">
+            <span class="field__label">Password</span>
+            <button class="link" type="button" (click)="onForgetPassword()">Forget Password?</button>
+          </div>
+          <input class="field__input" type="password" [(ngModel)]="password" />
+        </label>
   
-      <label class="remember">
-        <input type="checkbox" [(ngModel)]="remember" />
-        <span>Remember Password</span>
-      </label>
+        <label class="remember">
+          <input type="checkbox" [(ngModel)]="remember" />
+          <span>Remember Password</span>
+        </label>
   
-      <button class="btn-primary" type="button" (click)="onSubmit()">
-        Sign In
-      </button>
+        <button class="btn-primary" type="button" (click)="onSubmit()" [disabled]="!isFormValid()">
+          Sign In
+        </button>
+      </ng-container>
+
+      <!-- Forgot Password Fields -->
+      <ng-container *ngIf="forgotPasswordMode">
+        <label class="field">
+          <span class="field__label">Yeni şifre oluştur:</span>
+          <input class="field__input" type="password" [(ngModel)]="newPassword" />
+        </label>
+
+        <label class="field">
+          <span class="field__label">Yeni şifreyi tekrar gir:</span>
+          <input class="field__input" type="password" [(ngModel)]="confirmPassword" />
+        </label>
+
+        <button class="btn-primary" type="button" (click)="onSubmitNewPassword()" [disabled]="!isNewPasswordFormValid()">
+          Submit
+        </button>
+      </ng-container>
   
       <div class="bottom">
         <span class="bottom__text">Don't have an account?</span>
         <button class="link" type="button" [routerLink]="['/signup']">Create Account</button>
 
+      </div>
+    </div>
+
+    <!-- Error Modal -->
+    <div class="modal-overlay" *ngIf="showErrorModal" (click)="closeModal()">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+          <h3 class="modal-title">Login Failed</h3>
+          <button class="modal-close" type="button" (click)="closeModal()" aria-label="Close">
+            <i class="bi bi-x"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p class="modal-message">Invalid email.Please enter a valid email address.
+        </p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-primary" type="button" (click)="closeModal()">Tamam</button>
+        </div>
       </div>
     </div>
   </div>

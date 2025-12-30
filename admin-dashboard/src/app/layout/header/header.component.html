@@ -19,9 +19,42 @@
     <!-- Right -->
     <div class="header__right">
       <!-- Notification -->
-      <button class="icon-btn notif" type="button" aria-label="Notifications">
-        <i class="bi bi-bell"></i>
-        <span class="notif__dot" aria-hidden="true"></span>
+      <div class="notification-wrapper">
+        <button class="icon-btn notif" type="button" aria-label="Notifications" (click)="toggleNotificationMenu()">
+          <i class="bi bi-bell"></i>
+          <span class="notif__dot" aria-hidden="true"></span>
+        </button>
+
+        <!-- Notification Dropdown -->
+        <div class="notification-menu" *ngIf="notificationMenuOpen" (click)="$event.stopPropagation()">
+          <div class="notification-menu__header">
+            <h3 class="notification-menu__title">Notification</h3>
+          </div>
+          
+          <div class="notification-menu__body">
+            <div class="notification-item" *ngFor="let notification of notifications">
+              <div class="notification-item__icon" [style.background-color]="notification.iconBg">
+                <i class="bi" [ngClass]="notification.icon"></i>
+              </div>
+              <div class="notification-item__content">
+                <div class="notification-item__title">{{ notification.title }}</div>
+                <div class="notification-item__description">{{ notification.description }}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="notification-menu__footer">
+            <button class="notification-menu__see-all" type="button">See all notification</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Theme Toggle -->
+      <button class="icon-btn" type="button" aria-label="Theme" (click)="onToggleTheme()">
+        <i
+          class="bi"
+          [ngClass]="themeService.theme() === 'dark' ? 'bi-sun' : 'bi-moon'"
+        ></i>
       </button>
   
       <!-- Language -->
@@ -54,14 +87,6 @@
           </button>
         </div>
       </div>
-
-      <!-- Theme Toggle -->
-<button class="icon-btn" type="button" aria-label="Theme" (click)="onToggleTheme()">
-    <i
-      class="bi"
-      [ngClass]="themeService.theme() === 'dark' ? 'bi-sun' : 'bi-moon'"
-    ></i>
-  </button>
   
     </div>
   </header>
