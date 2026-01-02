@@ -1,0 +1,83 @@
+<div class="page">
+  <div class="page__head">
+    <h2 class="page__title">To-Do List</h2>
+
+    <button class="btn-primary" type="button" (click)="addNewTask()">
+      Add New Task
+    </button>
+  </div>
+
+  <div class="tasks-container">
+    <div
+      class="row"
+      *ngFor="let t of todos(); trackBy: trackById"
+      [class.row--active]="t.done"
+    >
+      <label class="left">
+        <input
+          class="chk"
+          type="checkbox"
+          [checked]="t.done"
+          (change)="toggleDone(t.id)"
+        />
+        <span class="text" [class.text--done]="t.done">{{ t.text }}</span>
+      </label>
+
+      <div class="actions">
+        <button
+          class="icon-btn"
+          type="button"
+          aria-label="Star"
+          (click)="toggleStar(t.id)"
+        >
+          <i
+            class="bi"
+            [class.bi-star]="!t.starred"
+            [class.bi-star-fill]="t.starred"
+            [class.is-starred]="t.starred"
+          ></i>
+        </button>
+
+        <button
+          class="icon-btn icon-btn--danger"
+          type="button"
+          aria-label="Delete"
+          (click)="removeTask(t.id)"
+        >
+          <i class="bi bi-trash"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="modal-overlay" *ngIf="showModal()" (click)="closeModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3 class="modal-title">Add New Task</h3>
+        <button class="modal-close" type="button" (click)="closeModal()" aria-label="Close">
+          <i class="bi bi-x"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <label class="modal-field">
+          <span class="modal-field__label">New task:</span>
+          <input
+            class="modal-field__input"
+            type="text"
+            [(ngModel)]="newTaskText"
+            (keyup.enter)="saveTask()"
+            placeholder="Enter task description"
+            autofocus
+          />
+        </label>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-ghost" type="button" (click)="closeModal()">Cancel</button>
+        <button class="btn-primary" type="button" (click)="saveTask()" [disabled]="!newTaskText.trim()">
+          Okey
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

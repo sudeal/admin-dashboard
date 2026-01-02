@@ -9,7 +9,8 @@ type MenuKey =
   | "inbox"
   | "order-lists"
   | "product-stock"
-  | "order-details";
+  | "order-details"
+  | "todo-list";
 
 type MenuItem = {
   key: MenuKey;
@@ -47,6 +48,7 @@ export class AdminSidebarComponent {
     { key: "order-lists", label: "Order Lists", icon: "bi-list-check", route: "/order-lists" },
     { key: "product-stock", label: "Product Stock", icon: "bi-file-earmark-text", route: "/product-stock" },
     { key: "order-details", label: "Order Details", icon: "bi-file-text", route: "/order-details" },
+    { key: "todo-list", label: "To Do List", icon: "bi-check2-square", route: "/todo-list" },
   ];
 
   // Eski setActive fonksiyonunu istersen silebilirsin.

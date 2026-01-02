@@ -3,32 +3,68 @@
       <h2 class="title">Create an Account</h2>
       <p class="subtitle">Create a account to continue</p>
   
-      <label class="field">
-        <span class="field__label">Email address:</span>
-        <input class="field__input" type="email" [(ngModel)]="email" />
-      </label>
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+        <label class="field">
+          <span class="field__label">Email address:</span>
+          <input 
+            class="field__input" 
+            type="email" 
+            formControlName="email"
+            [class.field__input--error]="hasError('email', 'required') || hasError('email', 'email')"
+          />
+          <span class="field__error" *ngIf="hasError('email', 'required')">
+            Email is required
+          </span>
+          <span class="field__error" *ngIf="hasError('email', 'email') && !hasError('email', 'required')">
+            Please enter a valid email address
+          </span>
+        </label>
   
-      <label class="field">
-        <span class="field__label">Username</span>
-        <input class="field__input" type="text" placeholder="Username" [(ngModel)]="username" />
-      </label>
+        <label class="field">
+          <span class="field__label">Username</span>
+          <input 
+            class="field__input" 
+            type="text" 
+            placeholder="Username" 
+            formControlName="username"
+            [class.field__input--error]="hasError('username', 'required') || hasError('username', 'minlength')"
+          />
+          <span class="field__error" *ngIf="hasError('username', 'required')">
+            Username is required
+          </span>
+          <span class="field__error" *ngIf="hasError('username', 'minlength') && !hasError('username', 'required')">
+            Username must be at least 3 characters
+          </span>
+        </label>
   
-      <label class="field">
-        <div class="field__label-row">
+        <label class="field">
           <span class="field__label">Password</span>
-          <button class="link" type="button">Forget Password?</button>
-        </div>
-        <input class="field__input" type="password" [(ngModel)]="password" />
-      </label>
+          <input 
+            class="field__input" 
+            type="password" 
+            formControlName="password"
+            [class.field__input--error]="hasError('password', 'required') || hasError('password', 'minlength')"
+          />
+          <span class="field__error" *ngIf="hasError('password', 'required')">
+            Password is required
+          </span>
+          <span class="field__error" *ngIf="hasError('password', 'minlength') && !hasError('password', 'required')">
+            Password must be at least 6 characters
+          </span>
+        </label>
   
-      <label class="check">
-        <input type="checkbox" [(ngModel)]="acceptTerms" />
-        <span>I accept terms and conditions</span>
-      </label>
+        <label class="check">
+          <input type="checkbox" formControlName="acceptTerms" />
+          <span>I accept terms and conditions</span>
+        </label>
+        <span class="field__error" *ngIf="hasError('acceptTerms', 'required')" style="margin-top: -10px; margin-bottom: 10px; display: block;">
+          You must accept the terms and conditions
+        </span>
   
-      <button class="btn-primary" type="button" (click)="onSubmit()" [disabled]="!acceptTerms">
-        Sign Up
-      </button>
+        <button class="btn-primary" type="submit" [disabled]="signupForm.invalid">
+          Sign Up
+        </button>
+      </form>
   
       <div class="bottom">
         <span class="bottom__text">Already have an account?</span>

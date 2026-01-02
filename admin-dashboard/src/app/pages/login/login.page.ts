@@ -1,47 +1,84 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { Router } from "@angular/router";
-import { FormsModule } from "@angular/forms";
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 
 @Component({
   selector: "app-login-page",
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: "./login.page.html",
   styleUrl: "./login.page.css",
 })
-export class LoginPage {
-  email = "";
-  password = "";
-  remember = true;
+export class LoginPage implements OnInit {
+  loginForm!: FormGroup;
+  resetPasswordForm!: FormGroup;
   showErrorModal = false;
   showPasswordErrorModal = false;
   forgotPasswordMode = false;
-  newPassword = "";
-  confirmPassword = "";
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private fb: FormBuilder
+  ) {}
 
-  isValidEmail(email: string): boolean {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
+  ngOnInit() {
+    
+    this.loginForm = this.fb.group({
+      email: ["", [Validators.required, Validators.email]],
+      password: ["", [Validators.required, Validators.minLength(6)]],
+      remember: [true]
+    });
+
+    
+    this.resetPasswordForm = this.fb.group({
+      newPassword: ["", [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ["", [Validators.required]]
+    }, { validators: this.passwordMatchValidator });
   }
 
-  isFormValid(): boolean {
-    return this.email.trim() !== "" && this.password.trim() !== "";
+  
+  passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
+    const newPassword = control.get("newPassword");
+    const confirmPassword = control.get("confirmPassword");
+
+    if (!newPassword || !confirmPassword) {
+      return null;
+    }
+
+    return newPassword.value === confirmPassword.value ? null : { passwordMismatch: true };
+  }
+
+  
+  get email() {
+    return this.loginForm.get("email");
+  }
+
+  get password() {
+    return this.loginForm.get("password");
+  }
+
+  get remember() {
+    return this.loginForm.get("remember");
+  }
+
+  get newPassword() {
+    return this.resetPasswordForm.get("newPassword");
+  }
+
+  get confirmPassword() {
+    return this.resetPasswordForm.get("confirmPassword");
   }
 
   onSubmit() {
-    if (!this.isFormValid()) {
+    if (this.loginForm.invalid) {
+     
+      this.loginForm.markAllAsTouched();
       return;
     }
 
-    if (!this.isValidEmail(this.email)) {
-      this.showErrorModal = true;
-      return;
-    }
-
+    
     this.router.navigateByUrl("/dashboard");
   }
 
@@ -55,28 +92,40 @@ export class LoginPage {
 
   onForgetPassword() {
     this.forgotPasswordMode = true;
+    
+    this.resetPasswordForm.reset();
   }
 
   onSubmitNewPassword() {
-    
-    if (this.email.trim() === "" || !this.isValidEmail(this.email)) {
-      this.showPasswordErrorModal = true;
+    if (this.resetPasswordForm.invalid) {
+      this.resetPasswordForm.markAllAsTouched();
+      
+      if (this.resetPasswordForm.errors?.["passwordMismatch"]) {
+        this.showPasswordErrorModal = true;
+      }
       return;
     }
 
     
-    if (this.newPassword !== this.confirmPassword) {
-      this.showPasswordErrorModal = true;
-      return;
-    }
-
-  
     this.forgotPasswordMode = false;
-    this.newPassword = "";
-    this.confirmPassword = "";
+    this.resetPasswordForm.reset();
   }
 
-  isNewPasswordFormValid(): boolean {
-    return this.newPassword.trim() !== "" && this.confirmPassword.trim() !== "";
+  
+  hasError(controlName: string, errorType: string): boolean {
+    const control = this.loginForm.get(controlName);
+    return !!(control && control.hasError(errorType) && (control.dirty || control.touched));
+  }
+
+ 
+  hasResetError(controlName: string, errorType: string): boolean {
+    const control = this.resetPasswordForm.get(controlName);
+    return !!(control && control.hasError(errorType) && (control.dirty || control.touched));
+  }
+
+  
+  hasPasswordMismatch(): boolean {
+    return !!(this.resetPasswordForm.errors?.["passwordMismatch"] && 
+             this.resetPasswordForm.get("confirmPassword")?.touched);
   }
 }

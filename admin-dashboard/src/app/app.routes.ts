@@ -9,6 +9,7 @@ import { LoginPage } from './pages/login/login.page';
 import { SignupPage } from './pages/signup/signup.page';
 import { InboxPage } from './pages/inbox/inbox.page';
 import { FavoritesPage } from './pages/favorites/favorites.page';
+import { TodoListPage } from './pages/todo-list/todo-list.page';
 import { NotFoundPage } from './pages/not-found/not-found.page';
 
 export const routes: Routes = [
@@ -24,6 +25,8 @@ export const routes: Routes = [
 
   { path: 'order-details', redirectTo: '/order-lists', pathMatch: 'full', title: 'Order Lists' },
   { path: 'order-details/:id', component: OrderDetailsPage, title: 'Order Details' },
+
+  { path: 'todo-list', component: TodoListPage, title: 'To Do List' },
 
   { path: 'inbox', component: InboxPage, title: 'Inbox' },
   { path: 'favorites', component: FavoritesPage, title: 'Favorites' },

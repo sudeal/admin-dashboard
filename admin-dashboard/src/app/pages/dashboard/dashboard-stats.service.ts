@@ -1,10 +1,18 @@
 import { Injectable } from "@angular/core";
 import { Observable, of } from "rxjs";
-import { delay } from "rxjs/operators";
+import { delay, map, switchMap } from "rxjs/operators";
 import { StatCard } from "../../shared/models/stat-card.model";
+import { SalesDetail } from "./sales-detail.model";
+import { OrderListsService } from "../order-lists/order-lists.service";
+import { ProductStockService } from "../product-stock/product-stock.service";
 
 @Injectable({ providedIn: "root" })
 export class DashboardStatsService {
+  constructor(
+    private orderService: OrderListsService,
+    private productService: ProductStockService
+  ) {}
+
   getStats(): Observable<StatCard[]> {
     return of<StatCard[]>([
       {
@@ -40,5 +48,39 @@ export class DashboardStatsService {
         tone: "orange",
       },
     ]).pipe(delay(400));
+  }
+
+  getSalesDetails(): Observable<SalesDetail[]> {
+    return this.orderService.getOrders().pipe(
+      switchMap((orders) => {
+        return this.productService.getProducts().pipe(
+          map((products) => {
+            const salesDetails: SalesDetail[] = [];
+            
+            orders.forEach((order) => {
+              order.items.forEach((item) => {
+                const product = products.find((p) => p.id === item.productId);
+                if (product) {
+                  salesDetails.push({
+                    orderId: order.id,
+                    customerName: order.name,
+                    productName: product.name,
+                    quantity: item.qty,
+                    unitPrice: product.price,
+                    total: product.price * item.qty,
+                    date: order.date,
+                    status: order.status,
+                    payment: order.payment,
+                  });
+                }
+              });
+            });
+
+            return salesDetails.slice(0, 10); // İlk 10 satış detayını göster
+          })
+        );
+      }),
+      delay(400)
+    );
   }
 }

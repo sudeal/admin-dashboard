@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { DashboardStatsService } from "./dashboard-stats.service";
 import { StatCard } from "../../shared/models/stat-card.model";
 import { StatCardsComponent } from "../../shared/models/components/stat-cards/stat-cards.component";
+import { SalesDetail } from "./sales-detail.model";
 
 @Component({
   selector: "app-dashboard-page",
@@ -14,10 +15,21 @@ import { StatCardsComponent } from "../../shared/models/components/stat-cards/st
 })
 export class DashboardPage implements OnInit {
   stats$!: Observable<StatCard[]>;
+  salesDetails$!: Observable<SalesDetail[]>;
 
   constructor(private statsService: DashboardStatsService) {}
 
   ngOnInit() {
     this.stats$ = this.statsService.getStats();
+    this.salesDetails$ = this.statsService.getSalesDetails();
+  }
+
+  formatMoney(amount: number): string {
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(amount);
   }
 }

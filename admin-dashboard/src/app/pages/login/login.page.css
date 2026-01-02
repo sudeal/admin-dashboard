@@ -96,6 +96,23 @@
     box-shadow: 0 0 0 3px rgba(72, 128, 255, 0.18);
     background: #ffffff;
   }
+
+  .field__input--error {
+    border-color: #ef4444;
+    background: #ffffff;
+  }
+
+  .field__input--error:focus {
+    border-color: #ef4444;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.18);
+  }
+
+  .field__error {
+    color: #ef4444;
+    font-size: 13px;
+    font-weight: 500;
+    margin-top: -4px;
+  }
   
   .link {
     border: 0;

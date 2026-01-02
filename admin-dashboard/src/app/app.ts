@@ -37,7 +37,6 @@ export class App {
       .subscribe(() => {
         const url = this.router.url;
 
-       
         this.isAuthPage.set(
           url.startsWith("/login") ||
             url.startsWith("/signup") ||
@@ -49,9 +48,11 @@ export class App {
               !url.startsWith("/order-details") &&
               !url.startsWith("/inbox") &&
               !url.startsWith("/favorites") &&
+              !url.startsWith("/todo-list") &&
               url !== "/" &&
               url !== "")
         );
+        
 
         
         const pageTitle = this.getDeepestTitle(this.activatedRoute);

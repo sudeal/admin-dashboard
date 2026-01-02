@@ -200,17 +200,18 @@
     font-weight: 600;
   }
   
-  .th-status,
-  .td-status {
-    text-align: right;
+  .th-status {
+    text-align: left;
   }
   
   .td-status {
-    text-align: right;
+    text-align: left;
+    vertical-align: middle;
   }
   
   .td-status .badge {
-    margin-left: auto;
+    margin-left: 0;
+    margin-right: 0;
   }
   
   /* ✅ STATUS badge - responsive, tek class, renkler data-status ile */

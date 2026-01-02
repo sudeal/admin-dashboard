@@ -78,15 +78,120 @@
   .panel__body--sales {
     min-height: clamp(300px, 40vh, 388px);
     height: auto;
+    overflow-x: auto;
   }
-  .panel__body--deals {
-    min-height: clamp(280px, 38vh, 364px);
-    height: auto;
+
+  /* Sales Table */
+  .sales-table-wrap {
+    width: 100%;
+    overflow-x: auto;
   }
-  .panel__body--revenue {
-    min-height: clamp(320px, 42vh, 422px);
-    height: auto;
+
+  .sales-table {
+    width: 100%;
+    min-width: 900px;
+    border-collapse: collapse;
+    table-layout: auto;
   }
+
+  .sales-table thead th {
+    font-size: clamp(11px, 1.3vw, 12px);
+    font-weight: 500;
+    color: var(--muted);
+    padding: clamp(10px, 1.2vw, 12px) clamp(8px, 1vw, 10px);
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+    white-space: nowrap;
+    background: color-mix(in srgb, var(--surface) 85%, #000 6%);
+  }
+
+  .sales-table tbody td {
+    font-size: clamp(11px, 1.3vw, 12px);
+    color: var(--text);
+    padding: clamp(10px, 1.2vw, 12px) clamp(8px, 1vw, 10px);
+    border-bottom: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+    vertical-align: middle;
+    font-weight: 500;
+    word-wrap: break-word;
+  }
+
+  .sales-table .name {
+    font-weight: 800;
+  }
+
+  .sales-table .muted {
+    color: var(--muted);
+    font-weight: 600;
+  }
+
+  .sales-table .strong {
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .sales-table .th-status {
+    text-align: left;
+  }
+
+  .sales-table .td-status {
+    text-align: left;
+    vertical-align: middle;
+  }
+
+  .sales-table .td-status .badge {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  /* Badge styles */
+  .sales-table .badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: clamp(80px, 9vw, 93px);
+    min-width: clamp(80px, 9vw, 93px);
+    height: clamp(24px, 2.8vw, 27px);
+    min-height: clamp(24px, 2.8vw, 27px);
+    padding: 0;
+    border-radius: clamp(6px, 0.8vw, 8px);
+    font-size: clamp(10px, 1.2vw, 12px);
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border: 1px solid transparent;
+  }
+
+  .sales-table .badge[data-status="Completed"] {
+    background: rgba(16, 185, 129, 0.14);
+    color: #10b981;
+    border-color: rgba(16, 185, 129, 0.25);
+  }
+
+  .sales-table .badge[data-status="Processing"] {
+    background: rgba(99, 102, 241, 0.14);
+    color: #6366f1;
+    border-color: rgba(99, 102, 241, 0.25);
+  }
+
+  .sales-table .badge[data-status="Rejected"] {
+    background: rgba(239, 68, 68, 0.14);
+    color: #ef4444;
+    border-color: rgba(239, 68, 68, 0.25);
+  }
+
+  .sales-table .badge[data-status="On Hold"] {
+    background: rgba(245, 158, 11, 0.16);
+    color: #f59e0b;
+    border-color: rgba(245, 158, 11, 0.25);
+  }
+
+  .sales-table .badge[data-status="In Transit"] {
+    background: rgba(168, 85, 247, 0.14);
+    color: #a855f7;
+    border-color: rgba(168, 85, 247, 0.25);
+  }
+
   
   /* ✅ Responsive kırılımlar */
   @media (max-width: 768px) {
@@ -102,6 +207,16 @@
   
     .panel__filter {
       align-self: flex-end;
+    }
+
+    .sales-table {
+      min-width: 700px;
+    }
+
+    .sales-table thead th,
+    .sales-table tbody td {
+      padding: clamp(8px, 1vw, 10px) clamp(6px, 0.8vw, 8px);
+      font-size: clamp(10px, 1.2vw, 11px);
     }
   }
   
