@@ -2,17 +2,17 @@
     
     <ng-container *ngIf="stats$ | async as stats; else loading">
       <app-stat-cards
-        [title]="'Dashboard'"
+        [title]="'dashboard.title' | translate"
         [cards]="stats"
         [loading]="false"
       ></app-stat-cards>
   
       <section class="panel">
         <div class="panel__header">
-          <h3 class="panel__title">Sales Details</h3>
+          <h3 class="panel__title">{{ 'dashboard.salesDetails' | translate }}</h3>
 
           <button class="panel__filter" type="button">
-            October
+            {{ 'dashboard.october' | translate }}
             <i class="bi bi-chevron-down"></i>
           </button>
         </div>
@@ -22,27 +22,27 @@
             <table class="sales-table">
               <thead>
                 <tr>
-                  <th>Order ID</th>
-                  <th>Customer</th>
-                  <th>Product</th>
-                  <th>Qty</th>
-                  <th>Unit Price</th>
-                  <th>Total</th>
-                  <th>Date</th>
-                  <th class="th-status">Status</th>
+                  <th>{{ 'dashboard.orderId' | translate }}</th>
+                  <th>{{ 'dashboard.customer' | translate }}</th>
+                  <th>{{ 'dashboard.product' | translate }}</th>
+                  <th>{{ 'dashboard.qty' | translate }}</th>
+                  <th>{{ 'dashboard.unitPrice' | translate }}</th>
+                  <th>{{ 'dashboard.total' | translate }}</th>
+                  <th>{{ 'dashboard.date' | translate }}</th>
+                  <th class="th-status">{{ 'dashboard.status' | translate }}</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let sale of salesDetails">
                   <td class="muted">#{{ sale.orderId }}</td>
                   <td class="name">{{ sale.customerName }}</td>
-                  <td class="muted">{{ sale.productName }}</td>
+                  <td class="muted">{{ translateProduct(sale.productName) }}</td>
                   <td class="muted">{{ sale.quantity }}</td>
                   <td class="muted">{{ formatMoney(sale.unitPrice) }}</td>
                   <td class="strong">{{ formatMoney(sale.total) }}</td>
                   <td class="muted">{{ sale.date }}</td>
                   <td class="td-status">
-                    <span class="badge" [attr.data-status]="sale.status">{{ sale.status }}</span>
+                    <span class="badge" [attr.data-status]="sale.status">{{ translateStatus(sale.status) }}</span>
                   </td>
                 </tr>
               </tbody>
@@ -55,7 +55,7 @@
   
     <ng-template #loading>
       <app-stat-cards
-        [title]="'dashboard'"
+        [title]="'dashboard.title' | translate"
         [cards]="[]"
         [loading]="true"
       ></app-stat-cards>

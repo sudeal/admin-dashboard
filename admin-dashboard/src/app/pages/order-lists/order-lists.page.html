@@ -1,5 +1,5 @@
 <div class="page">
-    <h2 class="page__title">Order Lists</h2>
+    <h2 class="page__title">{{ 'orderLists.title' | translate }}</h2>
   
     <section class="filter-bar" aria-label="Order filters">
       <button class="filter-bar__icon-btn" type="button" aria-label="Filter">
@@ -7,7 +7,7 @@
       </button>
   
       <div class="filter-bar__item">
-        <span class="filter-bar__label">Filter By</span>
+        <span class="filter-bar__label">{{ 'orderLists.filterBy' | translate }}</span>
         <i class="bi bi-chevron-down"></i>
       </div>
   
@@ -19,29 +19,29 @@
   
         <div class="date-pop" *ngIf="dateOpen">
           <div class="date-pop__head">
-            <div class="date-pop__title">Select Date Range</div>
-  
-            <button class="date-pop__x" type="button" (click)="closeDate()" aria-label="Close">
+            <div class="date-pop__title">{{ 'orderLists.selectDateRange' | translate }}</div>
+
+            <button class="date-pop__x" type="button" (click)="closeDate()" [attr.aria-label]="'orderLists.close' | translate">
               <i class="bi bi-x"></i>
             </button>
           </div>
-  
+
           <div class="date-pop__body">
             <div class="date-picker-wrapper">
               <input
                 #datePickerInput
                 type="text"
                 class="date-input-hidden"
-                placeholder="Select date range"
+                [placeholder]="'orderLists.selectDateRangePlaceholder' | translate"
                 readonly
               />
             </div>
-  
-            <div class="date-hint">You can choose multiple date</div>
-  
+
+            <div class="date-hint">{{ 'orderLists.youCanChooseMultipleDate' | translate }}</div>
+
             <div class="date-actions">
-              <button class="btn-ghost" type="button" (click)="clearDate()">Clear</button>
-              <button class="btn-primary" type="button" (click)="applyDate()">Apply Now</button>
+              <button class="btn-ghost" type="button" (click)="clearDate()">{{ 'orderLists.clear' | translate }}</button>
+              <button class="btn-primary" type="button" (click)="applyDate()">{{ 'orderLists.applyNow' | translate }}</button>
             </div>
           </div>
         </div>
@@ -55,31 +55,31 @@
   
         <div class="order-type-pop" *ngIf="orderTypeOpen">
           <div class="order-type-pop__head">
-            <div class="order-type-pop__title">Select Order Type</div>
-  
-            <button class="order-type-pop__x" type="button" (click)="closeOrderType()" aria-label="Close">
+            <div class="order-type-pop__title">{{ 'orderLists.selectOrderType' | translate }}</div>
+
+            <button class="order-type-pop__x" type="button" (click)="closeOrderType()" [attr.aria-label]="'orderLists.close' | translate">
               <i class="bi bi-x"></i>
             </button>
           </div>
-  
+
           <div class="order-type-pop__body">
             <div class="order-type-options">
               <button
-                *ngFor="let type of orderTypes"
+                *ngFor="let type of orderTypes; let i = index"
                 type="button"
                 class="order-type-chip"
                 [class.order-type-chip--selected]="selectedOrderTypes.includes(type)"
                 (click)="toggleOrderTypeSelection(type)"
               >
-                {{ type }}
+                {{ 'orderLists.orderTypes.' + orderTypeKeys[i] | translate }}
               </button>
             </div>
-  
-            <div class="order-type-hint">*You can choose multiple Order type</div>
-  
+
+            <div class="order-type-hint">{{ 'orderLists.youCanChooseMultipleOrderType' | translate }}</div>
+
             <div class="order-type-actions">
-              <button class="btn-ghost" type="button" (click)="clearOrderType()">Clear</button>
-              <button class="btn-primary" type="button" (click)="applyOrderType()">Apply Now</button>
+              <button class="btn-ghost" type="button" (click)="clearOrderType()">{{ 'orderLists.clear' | translate }}</button>
+              <button class="btn-primary" type="button" (click)="applyOrderType()">{{ 'orderLists.applyNow' | translate }}</button>
             </div>
           </div>
         </div>
@@ -93,31 +93,31 @@
   
         <div class="order-status-pop" *ngIf="orderStatusOpen">
           <div class="order-status-pop__head">
-            <div class="order-status-pop__title">Select Order Status</div>
-  
-            <button class="order-status-pop__x" type="button" (click)="closeOrderStatus()" aria-label="Close">
+            <div class="order-status-pop__title">{{ 'orderLists.selectOrderStatus' | translate }}</div>
+
+            <button class="order-status-pop__x" type="button" (click)="closeOrderStatus()" [attr.aria-label]="'orderLists.close' | translate">
               <i class="bi bi-x"></i>
             </button>
           </div>
-  
+
           <div class="order-status-pop__body">
             <div class="order-status-options">
               <button
-                *ngFor="let status of orderStatuses"
+                *ngFor="let status of orderStatuses; let i = index"
                 type="button"
                 class="order-status-chip"
                 [class.order-status-chip--selected]="selectedOrderStatuses.includes(status)"
                 (click)="toggleOrderStatusSelection(status)"
               >
-                {{ status }}
+                {{ 'orderLists.orderStatuses.' + orderStatusKeys[i] | translate }}
               </button>
             </div>
-  
-            <div class="order-status-hint">*You can choose multiple Order Status</div>
-  
+
+            <div class="order-status-hint">{{ 'orderLists.youCanChooseMultipleOrderStatus' | translate }}</div>
+
             <div class="order-status-actions">
-              <button class="btn-ghost" type="button" (click)="clearOrderStatus()">Clear</button>
-              <button class="btn-primary" type="button" (click)="applyOrderStatus()">Apply Now</button>
+              <button class="btn-ghost" type="button" (click)="clearOrderStatus()">{{ 'orderLists.clear' | translate }}</button>
+              <button class="btn-primary" type="button" (click)="applyOrderStatus()">{{ 'orderLists.applyNow' | translate }}</button>
             </div>
           </div>
         </div>
@@ -125,7 +125,7 @@
   
       <button class="filter-bar__reset" type="button">
         <i class="bi bi-arrow-counterclockwise"></i>
-        Reset Filter
+        {{ 'orderLists.resetFilter' | translate }}
       </button>
     </section>
   
@@ -133,12 +133,12 @@
       <table class="table">
         <thead>
           <tr>
-            <th>ID</th>
-            <th>NAME</th>
-            <th>ADDRESS</th>
-            <th>DATE</th>
-            <th>TYPE</th>
-            <th class="th-status">STATUS</th>
+            <th>{{ 'orderLists.id' | translate }}</th>
+            <th>{{ 'orderLists.name' | translate }}</th>
+            <th>{{ 'orderLists.address' | translate }}</th>
+            <th>{{ 'orderLists.date' | translate }}</th>
+            <th>{{ 'orderLists.type' | translate }}</th>
+            <th class="th-status">{{ 'orderLists.status' | translate }}</th>
           </tr>
         </thead>
   

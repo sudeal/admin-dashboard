@@ -11,27 +11,34 @@ import { InboxPage } from './pages/inbox/inbox.page';
 import { FavoritesPage } from './pages/favorites/favorites.page';
 import { TodoListPage } from './pages/todo-list/todo-list.page';
 import { NotFoundPage } from './pages/not-found/not-found.page';
+import { MainLayoutComponent } from './layout/main-layout/main-layout.component';
+import { AuthLayoutComponent } from './layout/auth-layout/auth-layout.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full', title: 'Login' },
-
-  { path: 'login', component: LoginPage, title: 'Login' },
-  { path: 'signup', component: SignupPage, title: 'Create Account' },
-
-  { path: 'dashboard', component: DashboardPage, title: 'Admin Dashboard' },
-  { path: 'products', component: ProductsPage, title: 'Products' },
-  { path: 'product-stock', component: ProductStockPage, title: 'Product Stock' },
-  { path: 'order-lists', component: OrderListsPage, title: 'Order Lists' },
-
-  { path: 'order-details', redirectTo: '/order-lists', pathMatch: 'full', title: 'Order Lists' },
-  { path: 'order-details/:id', component: OrderDetailsPage, title: 'Order Details' },
-
-  { path: 'todo-list', component: TodoListPage, title: 'To Do List' },
-
-  { path: 'inbox', component: InboxPage, title: 'Inbox' },
-  { path: 'favorites', component: FavoritesPage, title: 'Favorites' },
-
-  { path: '404notfound', component: NotFoundPage, title: 'Not Found' },
-
-  { path: '**', component: NotFoundPage, title: 'Not Found' },
+  { path: '', redirectTo: 'auth/login', pathMatch: 'full' },
+  {
+    path: 'auth',
+    component: AuthLayoutComponent,
+    children: [
+      { path: 'login', component: LoginPage, title: 'Login' },
+      { path: 'signup', component: SignupPage, title: 'Create Account' },
+      { path: '404notfound', component: NotFoundPage, title: 'Not Found' },
+    ],
+  },
+  {
+    path: '',
+    component: MainLayoutComponent,
+    children: [
+      { path: 'dashboard', component: DashboardPage, title: 'Admin Dashboard' },
+      { path: 'products', component: ProductsPage, title: 'Products' },
+      { path: 'product-stock', component: ProductStockPage, title: 'Product Stock' },
+      { path: 'order-lists', component: OrderListsPage, title: 'Order Lists' },
+      { path: 'order-details', redirectTo: '/order-lists', pathMatch: 'full' },
+      { path: 'order-details/:id', component: OrderDetailsPage, title: 'Order Details' },
+      { path: 'todo-list', component: TodoListPage, title: 'To Do List' },
+      { path: 'inbox', component: InboxPage, title: 'Inbox' },
+      { path: 'favorites', component: FavoritesPage, title: 'Favorites' },
+    ],
+  },
+  { path: '**', redirectTo: '404notfound' },
 ];

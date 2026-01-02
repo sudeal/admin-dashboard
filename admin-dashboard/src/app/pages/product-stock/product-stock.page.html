@@ -1,12 +1,12 @@
 <div class="page">
     <div class="page__header">
-      <h2 class="page__title">Product Stock</h2>
+      <h2 class="page__title">{{ 'productStock.title' | translate }}</h2>
       <div class="search">
         <i class="bi bi-search search__icon"></i>
         <input
           class="search__input"
           type="text"
-          placeholder="Search product name"
+          [placeholder]="'productStock.searchPlaceholder' | translate"
           (input)="onSearch($any($event.target).value)"
         />
       </div>
@@ -17,13 +17,13 @@
         <table class="table">
           <thead>
             <tr>
-              <th>Image</th>
-              <th>Product Name</th>
-              <th>Category</th>
-              <th>Price</th>
-              <th>Piece</th>
-              <th>Available Color</th>
-              <th class="th-action">Action</th>
+              <th>{{ 'productStock.image' | translate }}</th>
+              <th>{{ 'productStock.productName' | translate }}</th>
+              <th>{{ 'productStock.category' | translate }}</th>
+              <th>{{ 'productStock.price' | translate }}</th>
+              <th>{{ 'productStock.piece' | translate }}</th>
+              <th>{{ 'productStock.availableColor' | translate }}</th>
+              <th class="th-action">{{ 'productStock.action' | translate }}</th>
             </tr>
           </thead>
   

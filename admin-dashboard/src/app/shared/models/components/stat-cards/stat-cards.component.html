@@ -6,7 +6,7 @@
         <div class="card" *ngFor="let item of cards">
           <div class="card__top">
             <div>
-              <div class="card__title">{{ item.title }}</div>
+              <div class="card__title">{{ item.titleKey ? (item.titleKey | translate) : item.title }}</div>
               <div class="card__value">{{ item.value }}</div>
             </div>
   
@@ -17,7 +17,7 @@
   
           <div class="card__desc" [ngClass]="item.trend === 'up' ? 'is-up' : 'is-down'">
             <i class="bi" [ngClass]="item.trend === 'up' ? 'bi-arrow-up-right' : 'bi-arrow-down-right'"></i>
-            <span>{{ item.description }}</span>
+            <span>{{ item.descriptionKey ? (item.descriptionKey | translate) : item.description }}</span>
           </div>
         </div>
       </div>

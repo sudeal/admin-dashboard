@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { ActivatedRoute, RouterModule } from "@angular/router";
+import { TranslateModule, TranslateService } from "@ngx-translate/core";
 import { switchMap } from "rxjs/operators";
 import { Observable } from "rxjs";
 
@@ -22,7 +23,7 @@ type OrderItemView = {
 @Component({
   selector: "app-order-details-page",
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, TranslateModule],
   templateUrl: "./order-details.page.html",
   styleUrl: "./order-details.page.css",
 })
@@ -36,8 +37,36 @@ export class OrderDetailsPage implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private orderService: OrderListsService,
-    private productService: ProductStockService
+    private productService: ProductStockService,
+    private translate: TranslateService
   ) {}
+
+  translateStatus(status: string): string {
+    const statusKey = status.toLowerCase().replace(/\s+/g, '');
+    return this.translate.instant(`orderDetails.statuses.${statusKey}`) || status;
+  }
+
+  translatePayment(payment: string): string {
+    const paymentKey = payment.toLowerCase();
+    return this.translate.instant(`orderDetails.payments.${paymentKey}`) || payment;
+  }
+
+  translateCategory(category: string): string {
+    // Kategori isimlerini translate key'lerine çevir
+    const categoryMap: { [key: string]: string } = {
+      'Digital Product': 'orderLists.orderTypes.digitalProduct',
+      'Computer': 'orderLists.orderTypes.computer',
+      'Fashion': 'orderLists.orderTypes.fashion',
+      'Accessory': 'orderLists.orderTypes.accessory',
+      'Mobile': 'orderLists.orderTypes.mobile'
+    };
+    
+    const translateKey = categoryMap[category];
+    if (translateKey) {
+      return this.translate.instant(translateKey);
+    }
+    return category;
+  }
 
   ngOnInit() {
     this.order$ = this.route.paramMap.pipe(

@@ -1,26 +1,26 @@
 <div class="page">
-    <h2 class="page__title">Products</h2>
+    <h2 class="page__title">{{ 'products.title' | translate }}</h2>
   
     <section class="promo">
       <div class="promo__top">September 12-22</div>
   
       <div class="promo__content">
-        <h3 class="promo__title">Enjoy free home<br />delivery in this summer</h3>
-        <div class="promo__desc">Designer Dresses · Pick from trendy Designer Dress.</div>
+        <h3 class="promo__title">{{ 'products.promoTitle' | translate }}</h3>
+        <div class="promo__desc">{{ 'products.promoDesc' | translate }}</div>
   
-        <button class="promo__cta" type="button">Get Started</button>
+        <button class="promo__cta" type="button">{{ 'products.getStarted' | translate }}</button>
       </div>
   
-      <button class="promo__nav promo__nav--left" type="button" aria-label="Previous">
+      <button class="promo__nav promo__nav--left" type="button" [attr.aria-label]="'products.previous' | translate">
         <i class="bi bi-chevron-left"></i>
       </button>
-      <button class="promo__nav promo__nav--right" type="button" aria-label="Next">
+      <button class="promo__nav promo__nav--right" type="button" [attr.aria-label]="'products.next' | translate">
         <i class="bi bi-chevron-right"></i>
       </button>
     </section>
   </div>
 
-  <!-- Promo card üstte aynen kalsın -->
+  
 
 <ng-container *ngIf="products$ | async as products; else loading">
     <section class="cards">
@@ -32,7 +32,7 @@
         <div class="product-card__body">
           <div class="product-card__name-wrapper">
             <div class="product-card__name">{{ p.name }}</div>
-            <button class="product-card__fav" type="button" aria-label="Favorite">
+            <button class="product-card__fav" type="button" [attr.aria-label]="'products.favorite' | translate">
               <i class="bi bi-heart"></i>
             </button>
           </div>
@@ -47,7 +47,7 @@
             <span class="product-card__reviews">(131)</span>
           </div>
 
-          <button class="product-card__btn" type="button">Edit Product</button>
+          <button class="product-card__btn" type="button">{{ 'products.editProduct' | translate }}</button>
         </div>
       </div>
     </section>

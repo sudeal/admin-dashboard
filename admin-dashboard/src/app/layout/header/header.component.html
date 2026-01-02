@@ -10,7 +10,7 @@
         <input
           class="search__input"
           type="text"
-          placeholder="Search"
+          [placeholder]="'common.search' | translate"
           (input)="onSearch($any($event.target).value)"
         />
       </div>
@@ -28,7 +28,7 @@
         <!-- Notification Dropdown -->
         <div class="notification-menu" *ngIf="notificationMenuOpen" (click)="$event.stopPropagation()">
           <div class="notification-menu__header">
-            <h3 class="notification-menu__title">Notification</h3>
+            <h3 class="notification-menu__title">{{ 'common.notification' | translate }}</h3>
           </div>
           
           <div class="notification-menu__body">
@@ -37,14 +37,14 @@
                 <i class="bi" [ngClass]="notification.icon"></i>
               </div>
               <div class="notification-item__content">
-                <div class="notification-item__title">{{ notification.title }}</div>
-                <div class="notification-item__description">{{ notification.description }}</div>
+                <div class="notification-item__title">{{ notification.titleKey | translate }}</div>
+                <div class="notification-item__description">{{ notification.descriptionKey | translate }}</div>
               </div>
             </div>
           </div>
 
           <div class="notification-menu__footer">
-            <button class="notification-menu__see-all" type="button">See all notification</button>
+            <button class="notification-menu__see-all" type="button">{{ 'common.seeAll' | translate }}</button>
           </div>
         </div>
       </div>
@@ -58,13 +58,37 @@
       </button>
   
       <!-- Language -->
-      <button class="lang" type="button" aria-label="Language">
-        <!-- Dil ikonu -->
-        <i class="bi bi-globe lang__flag-icon"></i>
+      <div class="language-wrapper">
+        <button class="lang" type="button" aria-label="Language" (click)="toggleLanguageMenu()">
+          <!-- Dil ikonu -->
+          <i class="bi bi-globe lang__flag-icon"></i>
 
-        <span class="lang__text">English</span>
-        <i class="bi bi-chevron-down lang__chev"></i>
-      </button>
+          <span class="lang__text">{{ languageService.getLanguageLabel() }}</span>
+          <i class="bi bi-chevron-down lang__chev" [class.rotated]="languageMenuOpen"></i>
+        </button>
+
+        <!-- Language Dropdown -->
+        <div class="language-menu" *ngIf="languageMenuOpen" (click)="$event.stopPropagation()">
+          <button 
+            class="language-menu__item" 
+            type="button" 
+            [class.language-menu__item--active]="languageService.currentLanguage() === 'en'"
+            (click)="selectLanguage('en')"
+          >
+            <span>English</span>
+            <i class="bi bi-check" *ngIf="languageService.currentLanguage() === 'en'"></i>
+          </button>
+          <button 
+            class="language-menu__item" 
+            type="button"
+            [class.language-menu__item--active]="languageService.currentLanguage() === 'tr'"
+            (click)="selectLanguage('tr')"
+          >
+            <span>Türkçe</span>
+            <i class="bi bi-check" *ngIf="languageService.currentLanguage() === 'tr'"></i>
+          </button>
+        </div>
+      </div>
   
       <!-- Profile -->
       <div class="profile-wrapper">
@@ -83,7 +107,7 @@
         <div class="profile-menu" *ngIf="profileMenuOpen" (click)="$event.stopPropagation()">
           <button class="profile-menu__item" type="button" (click)="onLogout()">
             <i class="bi bi-box-arrow-right"></i>
-            <span>Logout</span>
+            <span>{{ 'common.logout' | translate }}</span>
           </button>
         </div>
       </div>

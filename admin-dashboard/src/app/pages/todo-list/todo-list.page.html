@@ -1,9 +1,9 @@
 <div class="page">
   <div class="page__head">
-    <h2 class="page__title">To-Do List</h2>
+    <h2 class="page__title">{{ 'todoList.title' | translate }}</h2>
 
     <button class="btn-primary" type="button" (click)="addNewTask()">
-      Add New Task
+      {{ 'todoList.addNewTask' | translate }}
     </button>
   </div>
 
@@ -27,7 +27,7 @@
         <button
           class="icon-btn"
           type="button"
-          aria-label="Star"
+          [attr.aria-label]="'todoList.star' | translate"
           (click)="toggleStar(t.id)"
         >
           <i
@@ -41,7 +41,7 @@
         <button
           class="icon-btn icon-btn--danger"
           type="button"
-          aria-label="Delete"
+          [attr.aria-label]="'todoList.delete' | translate"
           (click)="removeTask(t.id)"
         >
           <i class="bi bi-trash"></i>
@@ -54,28 +54,28 @@
   <div class="modal-overlay" *ngIf="showModal()" (click)="closeModal()">
     <div class="modal-content" (click)="$event.stopPropagation()">
       <div class="modal-header">
-        <h3 class="modal-title">Add New Task</h3>
-        <button class="modal-close" type="button" (click)="closeModal()" aria-label="Close">
+        <h3 class="modal-title">{{ 'todoList.addNewTask' | translate }}</h3>
+        <button class="modal-close" type="button" (click)="closeModal()" [attr.aria-label]="'todoList.close' | translate">
           <i class="bi bi-x"></i>
         </button>
       </div>
       <div class="modal-body">
         <label class="modal-field">
-          <span class="modal-field__label">New task:</span>
+          <span class="modal-field__label">{{ 'todoList.newTask' | translate }}</span>
           <input
             class="modal-field__input"
             type="text"
             [(ngModel)]="newTaskText"
             (keyup.enter)="saveTask()"
-            placeholder="Enter task description"
+            [placeholder]="'todoList.enterTaskDescription' | translate"
             autofocus
           />
         </label>
       </div>
       <div class="modal-footer">
-        <button class="btn-ghost" type="button" (click)="closeModal()">Cancel</button>
+        <button class="btn-ghost" type="button" (click)="closeModal()">{{ 'todoList.cancel' | translate }}</button>
         <button class="btn-primary" type="button" (click)="saveTask()" [disabled]="!newTaskText.trim()">
-          Okey
+          {{ 'todoList.okey' | translate }}
         </button>
       </div>
     </div>

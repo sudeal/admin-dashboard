@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { CommonModule, AsyncPipe } from "@angular/common";
 import { Observable } from "rxjs";
+import { TranslateModule } from "@ngx-translate/core";
 
 import { ProductStockService } from "../product-stock/product-stock.service";
 import { ProductStockItem } from "../product-stock/product-stock.model";
@@ -8,7 +9,7 @@ import { ProductStockItem } from "../product-stock/product-stock.model";
 @Component({
   selector: "app-products-page",
   standalone: true,
-  imports: [CommonModule, AsyncPipe],
+  imports: [CommonModule, AsyncPipe, TranslateModule],
   templateUrl: "./products.page.html",
   styleUrl: "./products.page.css",
 })

@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { Observable } from "rxjs";
+import { TranslateModule, TranslateService } from "@ngx-translate/core";
 import { OrderListsService } from "./order-lists.service";
 import { OrderRow } from "./order.model";
 import { FormsModule } from "@angular/forms";
@@ -10,7 +11,7 @@ import { RouterModule } from "@angular/router";
 @Component({
   selector: "app-order-lists-page",
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, TranslateModule],
   templateUrl: "./order-lists.page.html",
   styleUrl: "./order-lists.page.css",
 })
@@ -20,23 +21,39 @@ export class OrderListsPage implements OnInit, AfterViewInit {
   
   dateOpen = false;
   dateRange: [Date | null, Date | null] = [null, null];
-  appliedLabel = "Date";
+  appliedLabel = "";
   flatpickrInstance: flatpickr.Instance | null = null;
 
  
   orderTypeOpen = false;
   orderTypes = ["Digital Product", "Computer", "Fashion", "Accessory", "Mobile"];
+  orderTypeKeys: string[] = ["digitalProduct", "computer", "fashion", "accessory", "mobile"];
   selectedOrderTypes: string[] = [];
-  orderTypeLabel = "Order Type";
+  orderTypeLabel = "";
 
   orderStatusOpen = false;
   orderStatuses = ["Completed", "Processing", "Rejected", "On Hold", "In Transit"];
+  orderStatusKeys: string[] = ["completed", "processing", "rejected", "onHold", "inTransit"];
   selectedOrderStatuses: string[] = [];
-  orderStatusLabel = "Order Status";
+  orderStatusLabel = "";
 
   @ViewChild("datePickerInput", { static: false }) datePickerInput!: ElementRef<HTMLInputElement>;
 
-  constructor(private orderService: OrderListsService) {}
+  constructor(
+    private orderService: OrderListsService,
+    private translate: TranslateService
+  ) {
+    this.updateLabels();
+    this.translate.onLangChange.subscribe(() => {
+      this.updateLabels();
+    });
+  }
+
+  private updateLabels() {
+    this.appliedLabel = this.translate.instant('orderLists.date');
+    this.orderTypeLabel = this.translate.instant('orderLists.orderType');
+    this.orderStatusLabel = this.translate.instant('orderLists.orderStatus');
+  }
 
   ngOnInit() {
     this.orders$ = this.orderService.getOrders();
@@ -136,7 +153,7 @@ export class OrderListsPage implements OnInit, AfterViewInit {
     } else if (this.dateRange[0]) {
       this.appliedLabel = this.formatDate(this.dateRange[0]);
     } else {
-      this.appliedLabel = "Date";
+      this.appliedLabel = this.translate.instant('orderLists.date');
     }
   }
 
@@ -156,7 +173,7 @@ export class OrderListsPage implements OnInit, AfterViewInit {
 
   clearDate() {
     this.dateRange = [null, null];
-    this.appliedLabel = "Date";
+    this.appliedLabel = this.translate.instant('orderLists.date');
     if (this.flatpickrInstance) {
       this.flatpickrInstance.clear();
     }
@@ -182,16 +199,23 @@ export class OrderListsPage implements OnInit, AfterViewInit {
 
   applyOrderType() {
     if (this.selectedOrderTypes.length > 0) {
-      this.orderTypeLabel = this.selectedOrderTypes.join(", ");
+      const translatedTypes = this.selectedOrderTypes.map(type => {
+        const index = this.orderTypes.indexOf(type);
+        if (index >= 0) {
+          return this.translate.instant(`orderLists.orderTypes.${this.orderTypeKeys[index]}`);
+        }
+        return type;
+      });
+      this.orderTypeLabel = translatedTypes.join(", ");
     } else {
-      this.orderTypeLabel = "Order Type";
+      this.orderTypeLabel = this.translate.instant('orderLists.orderType');
     }
     this.closeOrderType();
   }
 
   clearOrderType() {
     this.selectedOrderTypes = [];
-    this.orderTypeLabel = "Order Type";
+    this.orderTypeLabel = this.translate.instant('orderLists.orderType');
   }
 
   toggleOrderStatus() {
@@ -213,15 +237,22 @@ export class OrderListsPage implements OnInit, AfterViewInit {
 
   applyOrderStatus() {
     if (this.selectedOrderStatuses.length > 0) {
-      this.orderStatusLabel = this.selectedOrderStatuses.join(", ");
+      const translatedStatuses = this.selectedOrderStatuses.map(status => {
+        const index = this.orderStatuses.indexOf(status);
+        if (index >= 0) {
+          return this.translate.instant(`orderLists.orderStatuses.${this.orderStatusKeys[index]}`);
+        }
+        return status;
+      });
+      this.orderStatusLabel = translatedStatuses.join(", ");
     } else {
-      this.orderStatusLabel = "Order Status";
+      this.orderStatusLabel = this.translate.instant('orderLists.orderStatus');
     }
     this.closeOrderStatus();
   }
 
   clearOrderStatus() {
     this.selectedOrderStatuses = [];
-    this.orderStatusLabel = "Order Status";
+    this.orderStatusLabel = this.translate.instant('orderLists.orderStatus');
   }
 }

@@ -1,14 +1,16 @@
 import { Component, Output, EventEmitter, HostListener } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { Router } from "@angular/router";
+import { TranslateModule } from "@ngx-translate/core";
 import { ThemeService } from "../../shared/services/theme.service";
+import { LanguageService } from "../../shared/services/language.service";
 
 @Component({
   selector: "app-header",
   standalone: true,
   templateUrl: "./header.component.html",
   styleUrl: "./header.component.css",
-  imports: [CommonModule],
+  imports: [CommonModule, TranslateModule],
 })
 export class HeaderComponent {
   @Output() toggleSidebar = new EventEmitter<void>();
@@ -16,35 +18,40 @@ export class HeaderComponent {
   searchValue = "";
   profileMenuOpen = false;
   notificationMenuOpen = false;
+  languageMenuOpen = false;
 
   notifications = [
     {
       icon: 'bi-gear',
       iconBg: '#3b82f6',
-      title: 'Settings',
-      description: 'Update Dashboard'
+      titleKey: 'common.settings',
+      descriptionKey: 'common.updateDashboard'
     },
     {
       icon: 'bi-calendar',
       iconBg: '#ec4899',
-      title: 'Event Update',
-      description: 'An event date update again'
+      titleKey: 'common.eventUpdate',
+      descriptionKey: 'common.anEventDateUpdate'
     },
     {
       icon: 'bi-person',
       iconBg: '#8b5cf6',
-      title: 'Profile',
-      description: 'Update your profile'
+      titleKey: 'common.profile',
+      descriptionKey: 'common.updateProfile'
     },
     {
       icon: 'bi-exclamation-triangle',
       iconBg: '#ef4444',
-      title: 'Application Error',
-      description: 'Check Your running application'
+      titleKey: 'common.applicationError',
+      descriptionKey: 'common.checkApplication'
     }
   ];
 
-  constructor(public themeService: ThemeService, private router: Router) {}
+  constructor(
+    public themeService: ThemeService,
+    private router: Router,
+    public languageService: LanguageService
+  ) {}
 
   onToggleSidebar() {
     this.toggleSidebar.emit();
@@ -69,7 +76,21 @@ export class HeaderComponent {
     this.notificationMenuOpen = !this.notificationMenuOpen;
     if (this.notificationMenuOpen) {
       this.profileMenuOpen = false;
+      this.languageMenuOpen = false;
     }
+  }
+
+  toggleLanguageMenu() {
+    this.languageMenuOpen = !this.languageMenuOpen;
+    if (this.languageMenuOpen) {
+      this.profileMenuOpen = false;
+      this.notificationMenuOpen = false;
+    }
+  }
+
+  selectLanguage(lang: 'en' | 'tr') {
+    this.languageService.setLanguage(lang);
+    this.languageMenuOpen = false;
   }
 
   onLogout() {
@@ -85,6 +106,9 @@ export class HeaderComponent {
     }
     if (!target.closest(".notification-wrapper")) {
       this.notificationMenuOpen = false;
+    }
+    if (!target.closest(".language-wrapper")) {
+      this.languageMenuOpen = false;
     }
   }
 }

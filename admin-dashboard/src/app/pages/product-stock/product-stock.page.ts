@@ -1,13 +1,14 @@
 import { Component, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { Observable } from "rxjs";
+import { TranslateModule } from "@ngx-translate/core";
 import { ProductStockItem } from "./product-stock.model";
 import { ProductStockService } from "./product-stock.service";
 
 @Component({
   selector: "app-product-stock-page",
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslateModule],
   templateUrl: "./product-stock.page.html",
   styleUrl: "./product-stock.page.css",
 })

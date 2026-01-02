@@ -1,4 +1,4 @@
-import { Component, signal } from "@angular/core";
+import { Component, signal, OnInit } from "@angular/core";
 import {
   Router,
   NavigationEnd,
@@ -8,78 +8,44 @@ import {
 import { filter } from "rxjs/operators";
 import { CommonModule } from "@angular/common";
 import { Title } from "@angular/platform-browser";
-
-import { AdminSidebarComponent } from "./layout/sidebar/admin-sidebar.component";
-import { HeaderComponent } from "./layout/header/header.component";
+import { TranslateModule, TranslateService } from "@ngx-translate/core";
+import { LanguageService } from "./shared/services/language.service";
 
 @Component({
   selector: "app-root",
   standalone: true,
-  imports: [RouterOutlet, AdminSidebarComponent, HeaderComponent, CommonModule],
+  imports: [RouterOutlet, CommonModule, TranslateModule],
   templateUrl: "./app.html",
   styleUrl: "./app.css",
 })
-export class App {
+export class App implements OnInit {
   protected readonly title = signal("admin-dashboard");
-
- 
-  sidebarCollapsed = signal(this.loadSidebarState());
-
-  isAuthPage = signal(false);
 
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private titleSrv: Title
+    private titleSrv: Title,
+    private translate: TranslateService,
+    private languageService: LanguageService
   ) {
     this.router.events
       .pipe(filter((e) => e instanceof NavigationEnd))
       .subscribe(() => {
-        const url = this.router.url;
-
-        this.isAuthPage.set(
-          url.startsWith("/login") ||
-            url.startsWith("/signup") ||
-            url.startsWith("/404notfound") ||
-            (!url.startsWith("/dashboard") &&
-              !url.startsWith("/products") &&
-              !url.startsWith("/product-stock") &&
-              !url.startsWith("/order-lists") &&
-              !url.startsWith("/order-details") &&
-              !url.startsWith("/inbox") &&
-              !url.startsWith("/favorites") &&
-              !url.startsWith("/todo-list") &&
-              url !== "/" &&
-              url !== "")
-        );
-        
-
-        
         const pageTitle = this.getDeepestTitle(this.activatedRoute);
         this.titleSrv.setTitle(pageTitle ? pageTitle : "AdminDashboard");
       });
+  }
+
+  ngOnInit() {
+    // Varsayılan dili ayarla
+    this.translate.setDefaultLang('en');
+    const savedLang = localStorage.getItem('app-language') || 'en';
+    this.translate.use(savedLang);
   }
 
   private getDeepestTitle(route: ActivatedRoute): string | null {
     let current: ActivatedRoute | null = route;
     while (current?.firstChild) current = current.firstChild;
     return current?.snapshot.data?.["title"] ?? null;
-  }
-
-  private loadSidebarState(): boolean {
-    const saved = localStorage.getItem("sidebarCollapsed");
-    return saved === "true";
-  }
-
-  private saveSidebarState(collapsed: boolean): void {
-    localStorage.setItem("sidebarCollapsed", collapsed.toString());
-  }
-
-  toggleSidebar() {
-    this.sidebarCollapsed.update((v) => {
-      const newValue = !v;
-      this.saveSidebarState(newValue);
-      return newValue;
-    });
   }
 }

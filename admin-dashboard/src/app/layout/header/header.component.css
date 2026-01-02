@@ -59,8 +59,9 @@
     
     white-space: nowrap;
     flex-shrink: 0;
-    padding-right: 300px; 
+    justify-content: flex-end; 
     margin-left: auto; 
+    margin-right: 300px;
   }
   
   
@@ -327,6 +328,61 @@
   .lang__chev {
     font-size: 12px;
     color: var(--muted);
+    transition: transform 0.2s ease;
+  }
+
+  .lang__chev.rotated {
+    transform: rotate(180deg);
+  }
+
+  .language-wrapper {
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .language-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 140px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 8px;
+    z-index: 1000;
+    box-sizing: border-box;
+  }
+
+  .language-menu__item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 12px;
+    border: 0;
+    background: transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    color: var(--text);
+    font-size: 13px;
+    font-weight: 600;
+    text-align: left;
+    transition: background 0.2s ease;
+  }
+
+  .language-menu__item:hover {
+    background: color-mix(in srgb, var(--surface) 80%, #000000 8%);
+  }
+
+  .language-menu__item--active {
+    background: color-mix(in srgb, var(--surface) 80%, #000000 5%);
+  }
+
+  .language-menu__item i {
+    font-size: 14px;
+    color: var(--primary);
   }
   
   

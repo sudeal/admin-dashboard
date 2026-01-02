@@ -1,6 +1,7 @@
 import { Component, signal, OnInit, effect } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
+import { TranslateModule } from "@ngx-translate/core";
 
 export type TodoItem = {
   id: string;
@@ -12,7 +13,7 @@ export type TodoItem = {
 @Component({
   selector: "app-todo-list-page",
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TranslateModule],
   templateUrl: "./todo-list.page.html",
   styleUrl: "./todo-list.page.css", 
 })

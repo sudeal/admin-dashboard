@@ -12,7 +12,7 @@
           routerLinkActive="is-active"
         >
           <i class="bi sidebar__icon" [ngClass]="item.icon"></i>
-          <span class="sidebar__text">{{ item.label }}</span>
+          <span class="sidebar__text">{{ item.labelKey | translate }}</span>
         </a>
       </nav>
       
