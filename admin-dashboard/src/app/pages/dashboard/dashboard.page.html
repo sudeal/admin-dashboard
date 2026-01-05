@@ -1,5 +1,4 @@
 <div class="dashboard">
-    
     <ng-container *ngIf="stats$ | async as stats; else loading">
       <app-stat-cards
         [title]="'dashboard.title' | translate"
@@ -7,36 +6,17 @@
         [loading]="false"
       ></app-stat-cards>
   
-      <section class="panel">
-        <div class="panel__header">
-          <h3 class="panel__title">{{ 'dashboard.dealsDetails' | translate }}</h3>
-
-          <button class="panel__filter" type="button">
-            {{ 'dashboard.october' | translate }}
-            <i class="bi bi-chevron-down"></i>
-          </button>
-        </div>
-
-        <div class="panel__body panel__body--sales">
-          <div class="sales-table-wrap">
-            <table class="sales-table">
-              <tbody>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
+      <!-- Sales Details -->
       <section class="panel">
         <div class="panel__header">
           <h3 class="panel__title">{{ 'dashboard.salesDetails' | translate }}</h3>
-
+  
           <button class="panel__filter" type="button">
             {{ 'dashboard.october' | translate }}
             <i class="bi bi-chevron-down"></i>
           </button>
         </div>
-
+  
         <div class="panel__body panel__body--sales">
           <div class="sales-table-wrap" *ngIf="salesDetails$ | async as salesDetails">
             <table class="sales-table">
@@ -52,6 +32,7 @@
                   <th class="th-status">{{ 'dashboard.status' | translate }}</th>
                 </tr>
               </thead>
+  
               <tbody>
                 <tr *ngFor="let sale of salesDetails">
                   <td class="muted">#{{ sale.orderId }}</td>
@@ -62,7 +43,9 @@
                   <td class="strong">{{ formatMoney(sale.total) }}</td>
                   <td class="muted">{{ sale.date }}</td>
                   <td class="td-status">
-                    <span class="badge" [attr.data-status]="sale.status">{{ translateStatus(sale.status) }}</span>
+                    <span class="badge" [attr.data-status]="sale.status">
+                      {{ translateStatus(sale.status) }}
+                    </span>
                   </td>
                 </tr>
               </tbody>
@@ -71,6 +54,23 @@
         </div>
       </section>
   
+      <!-- ✅ Deals Details (Chart.js) - Sales Details'in ALTINA -->
+      <section class="panel">
+        <div class="panel__header">
+          <h3 class="panel__title">Deals Details</h3>
+  
+          <button class="panel__filter" type="button">
+            {{ 'dashboard.october' | translate }}
+            <i class="bi bi-chevron-down"></i>
+          </button>
+        </div>
+  
+        <div class="panel__body panel__body--chart">
+          <div class="chart-container">
+            <canvas #dealsChart></canvas>
+          </div>
+        </div>
+      </section>
     </ng-container>
   
     <ng-template #loading>
