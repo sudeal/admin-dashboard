@@ -22,10 +22,14 @@
     "orderLists": "Order Lists",
     "productStock": "Product Stock",
     "orderDetails": "Order Details",
-    "todoList": "To Do List"
+    "todoList": "To Do List",
+    "pricing": "Pricing",
+    "contact": "Contact",
+    "pages": "Pages"
   },
   "dashboard": {
     "title": "Dashboard",
+    "dealsDetails": "Deals Details",
     "salesDetails": "Sales Details",
     "october": "October",
     "orderId": "Order ID",
@@ -101,7 +105,6 @@
     "id": "ID",
     "name": "NAME",
     "address": "ADDRESS",
-    "date": "DATE",
     "type": "TYPE",
     "status": "STATUS",
     "orderTypes": {
@@ -135,6 +138,8 @@
     "inboxComingSoon": "Inbox page coming soon...",
     "favorites": "Favorites",
     "favoritesComingSoon": "Favorites page coming soon...",
+    "pricingComingSoon": "Pricing page coming soon...",
+    "contactComingSoon": "Contact page coming soon...",
     "notFound": "Not Found",
     "pageNotFound": "404 - Page Not Found",
     "pageNotFoundMessage": "The page you are looking for does not exist.",
@@ -195,6 +200,51 @@
     "cancel": "Cancel",
     "okey": "Okey",
     "close": "Close"
+  },
+  "pricing": {
+    "getStarted": "Get Started",
+    "startTrial": "Start Your 30 Day Free Trial",
+    "plans": {
+      "basic": "Basic",
+      "standard": "Standard",
+      "premium": "Premium"
+    },
+    "features": {
+      "freeSetup": "Free Setup",
+      "bandwidthLimit": "Bandwidth Limit 10 GB",
+      "userConnection": "20 User Connection",
+      "analyticsReport": "Analytics Report",
+      "publicApiAccess": "Public API Access",
+      "pluginsIntegration": "Plugins Integration",
+      "customContentManagement": "Custom Content Management"
+    }
+  },
+  "contact": {
+    "title": "Add New Contact",
+    "uploadPhoto": "Upload Photo",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Your email",
+    "phoneNumber": "Phone Number",
+    "dateOfBirth": "Date of Birth",
+    "gender": {
+      "label": "Gender",
+      "male": "Male",
+      "female": "Female",
+      "other": "Other"
+    },
+    "addNow": "Add Now",
+    "placeholders": {
+      "firstName": "Enter your first name",
+      "lastName": "Enter your last name",
+      "email": "Enter your email",
+      "phoneNumber": "Enter your phone number",
+      "dateOfBirth": "Enter your birthdate"
+    },
+    "errors": {
+      "required": "This field is required",
+      "email": "Please enter a valid email address"
+    }
   },
   "language": {
     "english": "English",

@@ -1,0 +1,32 @@
+<div class="page">
+  <h2 class="page__title">{{ 'sidebar.pricing' | translate }}</h2>
+  
+  <div class="pricing-container">
+    <div class="pricing-card" *ngFor="let plan of plans">
+      <h3 class="pricing-card__title">{{ plan.name | translate }}</h3>
+      <div class="pricing-card__price">
+        <span class="pricing-card__currency">$</span>
+        <span class="pricing-card__amount">{{ plan.price }}</span>
+      </div>
+      
+      <ul class="pricing-card__features">
+        <li class="pricing-card__feature" 
+            *ngFor="let feature of plan.features"
+            [class.pricing-card__feature--disabled]="!feature.included">
+          {{ feature.name | translate }}
+        </li>
+      </ul>
+      
+      <button 
+        class="pricing-card__button"
+        type="button">
+        {{ 'pricing.getStarted' | translate }}
+      </button>
+      
+      <a href="#" class="pricing-card__trial-link">
+        {{ 'pricing.startTrial' | translate }}
+      </a>
+    </div>
+  </div>
+</div>
+

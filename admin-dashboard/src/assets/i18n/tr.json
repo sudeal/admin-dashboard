@@ -22,7 +22,10 @@
     "orderLists": "Sipariş Listesi",
     "productStock": "Ürün Stoku",
     "orderDetails": "Sipariş Detayları",
-    "todoList": "Yapılacaklar Listesi"
+    "todoList": "Yapılacaklar Listesi",
+    "pricing": "Fiyatlandırma",
+    "contact": "İletişim",
+    "pages": "Sayfalar"
   },
   "dashboard": {
     "title": "Gösterge Paneli",
@@ -135,6 +138,8 @@
     "inboxComingSoon": "Gelen kutusu sayfası yakında...",
     "favorites": "Favoriler",
     "favoritesComingSoon": "Favoriler sayfası yakında...",
+    "pricingComingSoon": "Fiyatlandırma sayfası yakında...",
+    "contactComingSoon": "İletişim sayfası yakında...",
     "notFound": "Bulunamadı",
     "pageNotFound": "404 - Sayfa Bulunamadı",
     "pageNotFoundMessage": "Aradığınız sayfa mevcut değil.",
@@ -195,6 +200,51 @@
     "cancel": "İptal",
     "okey": "Tamam",
     "close": "Kapat"
+  },
+  "pricing": {
+    "getStarted": "Başlayın",
+    "startTrial": "30 Günlük Ücretsiz Deneme Başlat",
+    "plans": {
+      "basic": "Temel",
+      "standard": "Standart",
+      "premium": "Premium"
+    },
+    "features": {
+      "freeSetup": "Ücretsiz Kurulum",
+      "bandwidthLimit": "Bant Genişliği Limiti 10 GB",
+      "userConnection": "20 Kullanıcı Bağlantısı",
+      "analyticsReport": "Analitik Rapor",
+      "publicApiAccess": "Genel API Erişimi",
+      "pluginsIntegration": "Eklenti Entegrasyonu",
+      "customContentManagement": "Özel İçerik Yönetimi"
+    }
+  },
+  "contact": {
+    "title": "Yeni İletişim Ekle",
+    "uploadPhoto": "Fotoğraf Yükle",
+    "firstName": "Ad",
+    "lastName": "Soyad",
+    "email": "E-posta",
+    "phoneNumber": "Telefon Numarası",
+    "dateOfBirth": "Doğum Tarihi",
+    "gender": {
+      "label": "Cinsiyet",
+      "male": "Erkek",
+      "female": "Kadın",
+      "other": "Diğer"
+    },
+    "addNow": "Şimdi Ekle",
+    "placeholders": {
+      "firstName": "Adınızı girin",
+      "lastName": "Soyadınızı girin",
+      "email": "E-posta adresinizi girin",
+      "phoneNumber": "Telefon numaranızı girin",
+      "dateOfBirth": "Doğum tarihinizi girin"
+    },
+    "errors": {
+      "required": "Bu alan zorunludur",
+      "email": "Geçerli bir e-posta adresi girin"
+    }
   },
   "language": {
     "english": "English",

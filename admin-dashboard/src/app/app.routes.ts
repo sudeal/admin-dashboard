@@ -10,6 +10,8 @@ import { SignupPage } from './pages/signup/signup.page';
 import { InboxPage } from './pages/inbox/inbox.page';
 import { FavoritesPage } from './pages/favorites/favorites.page';
 import { TodoListPage } from './pages/todo-list/todo-list.page';
+import { PricingPage } from './pages/pricing/pricing.page';
+import { ContactPage } from './pages/contact/contact.page';
 import { NotFoundPage } from './pages/not-found/not-found.page';
 import { MainLayoutComponent } from './layout/main-layout/main-layout.component';
 import { AuthLayoutComponent } from './layout/auth-layout/auth-layout.component';
@@ -36,6 +38,8 @@ export const routes: Routes = [
       { path: 'order-details', redirectTo: '/order-lists', pathMatch: 'full' },
       { path: 'order-details/:id', component: OrderDetailsPage, title: 'Order Details' },
       { path: 'todo-list', component: TodoListPage, title: 'To Do List' },
+      { path: 'pricing', component: PricingPage, title: 'Pricing' },
+      { path: 'contact', component: ContactPage, title: 'Contact' },
       { path: 'inbox', component: InboxPage, title: 'Inbox' },
       { path: 'favorites', component: FavoritesPage, title: 'Favorites' },
     ],

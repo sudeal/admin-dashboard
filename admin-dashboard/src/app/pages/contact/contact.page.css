@@ -1,0 +1,209 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.page {
+  padding: clamp(12px, 1.5vw, 18px) clamp(16px, 2vw, 22px) 0;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.page__title {
+  font-size: clamp(24px, 3vw, 32px);
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: clamp(24px, 3vw, 32px);
+}
+
+.contact-form-container {
+  width: 100%;
+  max-width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: clamp(12px, 1.5vw, 14px);
+  padding: clamp(24px, 3vw, 40px);
+  box-sizing: border-box;
+  box-shadow: 0 clamp(6px, 0.8vw, 10px) clamp(14px, 2vw, 24px) rgba(0, 0, 0, 0.12);
+}
+
+.contact-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(24px, 3vw, 32px);
+}
+
+
+.photo-upload-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(12px, 1.5vw, 16px);
+}
+
+.photo-upload {
+  position: relative;
+}
+
+.photo-upload__input {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.photo-upload__label {
+  display: block;
+  cursor: pointer;
+}
+
+.photo-upload__circle {
+  width: clamp(100px, 12vw, 120px);
+  height: clamp(100px, 12vw, 120px);
+  border-radius: 50%;
+  background: #f3f4f6;
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+.photo-upload__circle:hover {
+  border-color: #2563eb;
+  background: #eef2ff;
+}
+
+.photo-upload__icon {
+  font-size: clamp(32px, 4vw, 40px);
+  color: var(--muted);
+}
+
+.photo-upload__preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.photo-upload__link {
+  font-size: clamp(14px, 1.8vw, 16px);
+  font-weight: 500;
+  color: #2563eb;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  text-align: center;
+  display: block;
+}
+
+.photo-upload__link:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(20px, 2.5vw, 24px);
+  width: 100%;
+}
+
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px, 1vw, 10px);
+}
+
+.form-field__label {
+  font-size: clamp(14px, 1.8vw, 16px);
+  font-weight: 500;
+  color: var(--text);
+}
+
+.form-field__input {
+  width: 100%;
+  height: clamp(42px, 5.5vw, 48px);
+  padding: 0 clamp(12px, 1.5vw, 16px);
+  border: 1px solid var(--border);
+  border-radius: clamp(8px, 1vw, 10px);
+  background: #f3f4f6;
+  font-size: clamp(13px, 1.6vw, 15px);
+  color: var(--text);
+  outline: none;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+.form-field__input:focus {
+  border-color: #2563eb;
+  background: var(--surface);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.form-field__input--error {
+  border-color: #ef4444;
+  background: var(--surface);
+}
+
+.form-field__input--error:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.form-field__select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right clamp(12px, 1.5vw, 16px) center;
+  background-size: 12px;
+  padding-right: clamp(36px, 4.5vw, 40px);
+  cursor: pointer;
+}
+
+.form-field__error {
+  font-size: clamp(12px, 1.5vw, 13px);
+  color: #ef4444;
+  font-weight: 500;
+  margin-top: -4px;
+}
+
+
+.form-submit-button {
+  width: 100%;
+  max-width: 200px;
+  height: clamp(44px, 5.5vw, 48px);
+  margin: clamp(8px, 1vw, 12px) auto 0;
+  border: 0;
+  border-radius: clamp(8px, 1vw, 10px);
+  background: #2563eb;
+  color: #ffffff;
+  font-size: clamp(14px, 1.8vw, 16px);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  display: block;
+}
+
+.form-submit-button:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+
+.form-submit-button:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+@media (max-width: 768px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-form-container {
+    padding: clamp(20px, 2.5vw, 24px);
+  }
+}

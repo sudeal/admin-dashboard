@@ -11,7 +11,9 @@ type MenuKey =
   | "order-lists"
   | "product-stock"
   | "order-details"
-  | "todo-list";
+  | "todo-list"
+  | "pricing"
+  | "contact";
 
 type MenuItem = {
   key: MenuKey;
@@ -39,15 +41,19 @@ export class AdminSidebarComponent {
   // Ama istersen başka amaçla kalsın diye bırakıyorum:
   activeKey: MenuKey = "dashboard";
 
-  menu: MenuItem[] = [
+  mainMenu: MenuItem[] = [
     { key: "dashboard", labelKey: "sidebar.dashboard", icon: "bi-speedometer", route: "/dashboard" },
     { key: "products", labelKey: "sidebar.products", icon: "bi-grid", route: "/products" },
     { key: "favorites", labelKey: "sidebar.favorites", icon: "bi-heart", route: "/favorites" },
     { key: "inbox", labelKey: "sidebar.inbox", icon: "bi-chat-left", route: "/inbox" },
     { key: "order-lists", labelKey: "sidebar.orderLists", icon: "bi-list-check", route: "/order-lists" },
     { key: "product-stock", labelKey: "sidebar.productStock", icon: "bi-file-earmark-text", route: "/product-stock" },
-    { key: "order-details", labelKey: "sidebar.orderDetails", icon: "bi-file-text", route: "/order-details" },
-    { key: "todo-list", labelKey: "sidebar.todoList", icon: "bi-check2-square", route: "/todo-list" },
+  ];
+
+  pagesMenu: MenuItem[] = [
+    { key: "todo-list", labelKey: "sidebar.todoList", icon: "bi-clipboard-check", route: "/todo-list" },
+    { key: "contact", labelKey: "sidebar.contact", icon: "bi-people", route: "/contact" },
+    { key: "pricing", labelKey: "sidebar.pricing", icon: "bi-gift", route: "/pricing" },
   ];
 
   // Eski setActive fonksiyonunu istersen silebilirsin.

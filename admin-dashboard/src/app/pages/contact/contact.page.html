@@ -1,0 +1,133 @@
+<div class="page">
+  <h2 class="page__title">{{ 'contact.title' | translate }}</h2>
+  
+  <div class="contact-form-container">
+    <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="contact-form">
+      
+      <div class="photo-upload-section">
+        <div class="photo-upload">
+          <input 
+            type="file" 
+            id="photo-upload" 
+            accept="image/*" 
+            (change)="onFileSelected($event)"
+            class="photo-upload__input"
+          />
+          <label for="photo-upload" class="photo-upload__label">
+            <div class="photo-upload__circle">
+              <img *ngIf="previewUrl" [src]="previewUrl" alt="Profile" class="photo-upload__preview" />
+              <i *ngIf="!previewUrl" class="bi bi-camera photo-upload__icon"></i>
+            </div>
+          </label>
+        </div>
+        <a href="#" class="photo-upload__link" (click)="$event.preventDefault()">
+          {{ 'contact.uploadPhoto' | translate }}
+        </a>
+      </div>
+
+      
+      <div class="form-grid">
+        
+        <div class="form-field">
+          <label class="form-field__label">{{ 'contact.firstName' | translate }}</label>
+          <input 
+            type="text" 
+            class="form-field__input"
+            formControlName="firstName"
+            [placeholder]="'contact.placeholders.firstName' | translate"
+            [class.form-field__input--error]="hasError('firstName', 'required')"
+          />
+          <span class="form-field__error" *ngIf="hasError('firstName', 'required')">
+            {{ 'contact.errors.required' | translate }}
+          </span>
+        </div>
+
+       
+        <div class="form-field">
+          <label class="form-field__label">{{ 'contact.lastName' | translate }}</label>
+          <input 
+            type="text" 
+            class="form-field__input"
+            formControlName="lastName"
+            [placeholder]="'contact.placeholders.lastName' | translate"
+            [class.form-field__input--error]="hasError('lastName', 'required')"
+          />
+          <span class="form-field__error" *ngIf="hasError('lastName', 'required')">
+            {{ 'contact.errors.required' | translate }}
+          </span>
+        </div>
+
+       
+        <div class="form-field">
+          <label class="form-field__label">{{ 'contact.email' | translate }}</label>
+          <input 
+            type="email" 
+            class="form-field__input"
+            formControlName="email"
+            [placeholder]="'contact.placeholders.email' | translate"
+            [class.form-field__input--error]="hasError('email', 'required') || hasError('email', 'email')"
+          />
+          <span class="form-field__error" *ngIf="hasError('email', 'required')">
+            {{ 'contact.errors.required' | translate }}
+          </span>
+          <span class="form-field__error" *ngIf="hasError('email', 'email') && !hasError('email', 'required')">
+            {{ 'contact.errors.email' | translate }}
+          </span>
+        </div>
+
+        
+        <div class="form-field">
+          <label class="form-field__label">{{ 'contact.phoneNumber' | translate }}</label>
+          <input 
+            type="tel" 
+            class="form-field__input"
+            formControlName="phoneNumber"
+            [placeholder]="'contact.placeholders.phoneNumber' | translate"
+            [class.form-field__input--error]="hasError('phoneNumber', 'required')"
+          />
+          <span class="form-field__error" *ngIf="hasError('phoneNumber', 'required')">
+            {{ 'contact.errors.required' | translate }}
+          </span>
+        </div>
+
+       
+        <div class="form-field">
+          <label class="form-field__label">{{ 'contact.dateOfBirth' | translate }}</label>
+          <input 
+            type="date" 
+            class="form-field__input"
+            formControlName="dateOfBirth"
+            [placeholder]="'contact.placeholders.dateOfBirth' | translate"
+            [class.form-field__input--error]="hasError('dateOfBirth', 'required')"
+          />
+          <span class="form-field__error" *ngIf="hasError('dateOfBirth', 'required')">
+            {{ 'contact.errors.required' | translate }}
+          </span>
+        </div>
+
+       
+        <div class="form-field">
+          <label class="form-field__label">{{ 'contact.gender.label' | translate }}</label>
+          <select 
+            class="form-field__input form-field__select"
+            formControlName="gender"
+            [class.form-field__input--error]="hasError('gender', 'required')"
+          >
+            <option *ngFor="let option of genderOptions" [value]="option.value">
+              {{ option.label | translate }}
+            </option>
+          </select>
+          <span class="form-field__error" *ngIf="hasError('gender', 'required')">
+            {{ 'contact.errors.required' | translate }}
+          </span>
+        </div>
+      </div>
+
+      
+      <button type="submit" class="form-submit-button">
+        {{ 'contact.addNow' | translate }}
+      </button>
+    </form>
+  </div>
+</div>
+
