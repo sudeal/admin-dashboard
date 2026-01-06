@@ -108,26 +108,34 @@
 .form-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: clamp(20px, 2.5vw, 24px);
+  gap: clamp(16px, 2vw, 20px) clamp(20px, 2.5vw, 24px);
   width: 100%;
+  justify-items: center;
 }
 
 
 .form-field {
   display: flex;
   flex-direction: column;
-  gap: clamp(8px, 1vw, 10px);
+  gap: clamp(6px, 0.8vw, 8px);
+  width: 100%;
+  align-items: center;
+  max-width: 360px;
 }
 
 .form-field__label {
   font-size: clamp(14px, 1.8vw, 16px);
   font-weight: 500;
   color: var(--text);
+  text-align: left;
+  width: 100%;
+  align-self: flex-start;
 }
 
 .form-field__input {
   width: 100%;
-  height: clamp(42px, 5.5vw, 48px);
+  max-width: 360px;
+  height: clamp(44px, 5.5vw, 48px);
   padding: 0 clamp(12px, 1.5vw, 16px);
   border: 1px solid var(--border);
   border-radius: clamp(8px, 1vw, 10px);
@@ -137,6 +145,7 @@
   outline: none;
   box-sizing: border-box;
   transition: all 0.2s ease;
+  margin: 0 auto;
 }
 
 .form-field__input:focus {

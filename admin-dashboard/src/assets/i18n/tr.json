@@ -204,6 +204,7 @@
   "pricing": {
     "getStarted": "Başlayın",
     "startTrial": "30 Günlük Ücretsiz Deneme Başlat",
+    "monthlyCharge": "Aylık Ücret",
     "plans": {
       "basic": "Temel",
       "standard": "Standart",

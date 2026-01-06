@@ -204,6 +204,7 @@
   "pricing": {
     "getStarted": "Get Started",
     "startTrial": "Start Your 30 Day Free Trial",
+    "monthlyCharge": "Monthly Charge",
     "plans": {
       "basic": "Basic",
       "standard": "Standard",

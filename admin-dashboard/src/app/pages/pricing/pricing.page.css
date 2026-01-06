@@ -27,16 +27,21 @@
 }
 
 .pricing-card {
-  flex: 1;
-  min-width: clamp(280px, 30vw, 320px);
-  max-width: 400px;
+  flex: 0 0 auto;
+  width: clamp(280px, 30vw, 350px);
+  max-width: 350px;
+  height: clamp(700px, 90vh, 848px);
+  min-height: 848px;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: clamp(12px, 1.5vw, 16px);
-  padding: clamp(24px, 3vw, 32px);
+  padding: clamp(40px, 5vw, 60px) clamp(32px, 4vw, 48px);
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: space-between;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -50,26 +55,42 @@
   font-size: clamp(20px, 2.5vw, 24px);
   font-weight: 700;
   color: var(--text);
-  margin: 0 0 clamp(16px, 2vw, 24px) 0;
+  margin: 0 0 clamp(12px, 1.5vw, 16px) 0;
+  text-align: center;
+  width: 100%;
+}
+
+.pricing-card__subtitle {
+  font-size: clamp(14px, 1.8vw, 16px);
+  font-weight: 400;
+  color: var(--muted);
+  margin: 0 0 clamp(24px, 3vw, 32px) 0;
+  text-align: center;
+  width: 100%;
 }
 
 .pricing-card__price {
   display: flex;
-  align-items: flex-start;
-  margin-bottom: clamp(20px, 2.5vw, 28px);
-  gap: 4px;
+  align-items: baseline;
+  justify-content: center;
+  margin-bottom: clamp(32px, 4vw, 40px);
+  padding-bottom: clamp(20px, 2.5vw, 24px);
+  gap: 2px;
+  width: 100%;
+  border-bottom: 1px solid var(--border);
+  position: relative;
 }
 
 .pricing-card__currency {
-  font-size: clamp(20px, 2.5vw, 24px);
+  font-size: clamp(32px, 4vw, 42px);
   font-weight: 700;
   color: #2563eb;
   line-height: 1;
-  margin-top: 4px;
+  align-self: baseline;
 }
 
 .pricing-card__amount {
-  font-size: clamp(36px, 4.5vw, 48px);
+  font-size: clamp(32px, 4vw, 42px);
   font-weight: 700;
   color: #2563eb;
   line-height: 1;
@@ -78,11 +99,17 @@
 .pricing-card__features {
   list-style: none;
   padding: 0;
-  margin: 0 0 clamp(24px, 3vw, 32px) 0;
+  margin: clamp(24px, 3vw, 32px) 0 clamp(32px, 4vw, 40px) 0;
+  padding-bottom: clamp(20px, 2.5vw, 24px);
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: clamp(12px, 1.5vw, 16px);
+  gap: clamp(18px, 2.2vw, 22px);
+  width: 100%;
+  align-items: center;
+  justify-content: flex-start;
+  border-bottom: 1px solid var(--border);
+  position: relative;
 }
 
 .pricing-card__feature {
@@ -91,7 +118,11 @@
   color: var(--text);
   display: flex;
   align-items: center;
-  line-height: 1.5;
+  justify-content: center;
+  line-height: 1.6;
+  text-align: center;
+  width: 100%;
+  min-height: 24px;
 }
 
 .pricing-card__feature--disabled {
@@ -100,17 +131,24 @@
 }
 
 .pricing-card__button {
-  width: 100%;
-  height: clamp(44px, 5.5vw, 48px);
+  width: auto;
+  min-width: 140px;
+  padding: clamp(10px, 1.2vw, 12px) clamp(24px, 3vw, 32px);
+  height: auto;
   border: 2px solid #2563eb;
   background: var(--surface);
   color: #2563eb;
-  border-radius: clamp(8px, 1vw, 10px);
-  font-size: clamp(14px, 1.8vw, 16px);
+  border-radius: 50px;
+  font-size: clamp(13px, 1.6vw, 15px);
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
-  margin-bottom: clamp(12px, 1.5vw, 16px);
+  margin-top: auto;
+  margin-bottom: clamp(16px, 2vw, 20px);
+  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .pricing-card__button:hover {
@@ -119,26 +157,31 @@
 }
 
 .pricing-card__button--primary {
-  background: #2563eb;
-  color: #ffffff;
+  background: var(--surface);
+  color: #2563eb;
+  border-color: #2563eb;
 }
 
 .pricing-card__button--primary:hover {
-  background: #1d4ed8;
-  border-color: #1d4ed8;
+  background: #2563eb;
+  border-color: #2563eb;
+  color: #ffffff;
 }
 
 .pricing-card__trial-link {
   text-align: center;
   font-size: clamp(13px, 1.6vw, 14px);
   font-weight: 500;
-  color: var(--muted);
-  text-decoration: none;
+  color: var(--text);
+  text-decoration: underline;
   transition: color 0.2s ease;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 .pricing-card__trial-link:hover {
-  color: #2563eb;
+  color: var(--text);
+  text-decoration: underline;
 }
 
 
@@ -151,6 +194,8 @@
   .pricing-card {
     width: 100%;
     max-width: 100%;
+    min-height: auto;
+    height: auto;
   }
 }
 
