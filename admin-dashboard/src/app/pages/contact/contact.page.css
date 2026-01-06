@@ -34,7 +34,6 @@
   gap: clamp(24px, 3vw, 32px);
 }
 
-
 .photo-upload-section {
   display: flex;
   flex-direction: column;
@@ -104,22 +103,24 @@
   text-decoration: underline;
 }
 
-
+/* ✅ GRID: ortadaki boşluğu azalt */
 .form-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: clamp(16px, 2vw, 20px) clamp(20px, 2.5vw, 24px);
+  grid-template-columns: repeat(2, minmax(240px, 360px)); /* iki kolon ama max 360 */
+  justify-content: center; /* tüm bloğu ortala */
+  column-gap: clamp(16px, 2vw, 28px); /* ⬅️ ORTA BOŞLUK (azaltıldı) */
+  row-gap: clamp(16px, 2vw, 20px);
   width: 100%;
-  justify-items: center;
+  justify-items: stretch; /* ⬅️ item’lar ortalanmasın */
 }
 
-
+/* ✅ Field: ortalama kaldır */
 .form-field {
   display: flex;
   flex-direction: column;
   gap: clamp(6px, 0.8vw, 8px);
   width: 100%;
-  align-items: center;
+  align-items: stretch; /* ⬅️ center yerine */
   max-width: 360px;
 }
 
@@ -145,7 +146,7 @@
   outline: none;
   box-sizing: border-box;
   transition: all 0.2s ease;
-  margin: 0 auto;
+  margin: 0; /* ⬅️ 0 auto kaldırıldı */
 }
 
 .form-field__input:focus {
@@ -180,7 +181,6 @@
   margin-top: -4px;
 }
 
-
 .form-submit-button {
   width: 100%;
   max-width: 200px;
@@ -210,6 +210,7 @@
 @media (max-width: 768px) {
   .form-grid {
     grid-template-columns: 1fr;
+    justify-content: stretch;
   }
 
   .contact-form-container {
