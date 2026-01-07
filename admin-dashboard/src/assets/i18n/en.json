@@ -24,6 +24,7 @@
     "orderDetails": "Order Details",
     "todoList": "To Do List",
     "pricing": "Pricing",
+    "charts": "Charts",
     "contact": "Contact",
     "pages": "Pages"
   },
@@ -219,6 +220,9 @@
       "pluginsIntegration": "Plugins Integration",
       "customContentManagement": "Custom Content Management"
     }
+  },
+  "charts": {
+    "comingSoon": "Charts page coming soon..."
   },
   "contact": {
     "title": "Add New Contact",

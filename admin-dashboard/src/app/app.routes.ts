@@ -11,6 +11,7 @@ import { InboxPage } from './pages/inbox/inbox.page';
 import { FavoritesPage } from './pages/favorites/favorites.page';
 import { TodoListPage } from './pages/todo-list/todo-list.page';
 import { PricingPage } from './pages/pricing/pricing.page';
+import { ChartsPage } from './pages/charts/charts.page';
 import { ContactPage } from './pages/contact/contact.page';
 import { NotFoundPage } from './pages/not-found/not-found.page';
 import { MainLayoutComponent } from './layout/main-layout/main-layout.component';
@@ -39,6 +40,7 @@ export const routes: Routes = [
       { path: 'order-details/:id', component: OrderDetailsPage, title: 'Order Details' },
       { path: 'todo-list', component: TodoListPage, title: 'To Do List' },
       { path: 'pricing', component: PricingPage, title: 'Pricing' },
+      { path: 'charts', component: ChartsPage, title: 'Charts' },
       { path: 'contact', component: ContactPage, title: 'Contact' },
       { path: 'inbox', component: InboxPage, title: 'Inbox' },
       { path: 'favorites', component: FavoritesPage, title: 'Favorites' },
