@@ -1,3 +1,9 @@
+<div 
+  class="sidebar-overlay" 
+  *ngIf="!sidebarCollapsed() && isMobile()"
+  (click)="toggleSidebar()"
+></div>
+
 <app-admin-sidebar [collapsed]="sidebarCollapsed()"></app-admin-sidebar>
 
 <app-header
