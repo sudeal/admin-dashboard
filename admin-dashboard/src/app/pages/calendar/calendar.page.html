@@ -1,0 +1,171 @@
+<div class="page">
+  <h2 class="page__title">Calendar</h2>
+  <div class="calendar-layout">
+    <!-- Left Sidebar -->
+    <aside class="calendar-sidebar">
+      <button class="add-event-btn" (click)="openAddEventModal()">
+        <span>+</span> Add New Event
+      </button>
+      
+      <div class="upcoming-events">
+        <h3 class="section-title">You are going to</h3>
+        <div class="event-list">
+          <div 
+            *ngFor="let event of upcomingEvents" 
+            class="event-item"
+          >
+            <div class="event-image">
+              <div class="image-placeholder-small">
+                <svg width="100%" height="100%" viewBox="0 0 80 60" fill="none">
+                  <rect width="80" height="60" fill="#e5e7eb"/>
+                  <circle cx="30" cy="20" r="8" fill="#9ca3af"/>
+                  <circle cx="50" cy="20" r="8" fill="#9ca3af"/>
+                  <circle cx="40" cy="35" r="8" fill="#9ca3af"/>
+                </svg>
+              </div>
+            </div>
+            <div class="event-info">
+              <div class="event-title">{{ event.title }}</div>
+              <div class="event-date-time">{{ event.dateTime }}</div>
+              <div class="event-location">{{ event.location }}</div>
+              <div class="event-organization">{{ event.organization }}</div>
+              <div class="event-attendees">
+                <div class="attendee-avatars-small">
+                  <div class="avatar-small" *ngFor="let i of [1,2,3]"></div>
+                  <div class="avatar-more-small">{{ event.attendees }}+</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="see-more-btn">See More</button>
+      </div>
+    </aside>
+
+    <!-- Right Calendar -->
+    <div class="calendar-main">
+      <div class="calendar-container">
+        <full-calendar #fullCalendar [options]="calendarOptions"></full-calendar>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Event Tooltip/Modal -->
+  <div 
+    *ngIf="tooltipVisible && currentEvent" 
+    class="event-tooltip"
+    [style.left.px]="tooltipX + 10"
+    [style.top.px]="tooltipY + 10"
+  >
+    <div class="tooltip-image">
+      <div class="image-placeholder">
+        <svg width="100%" height="100%" viewBox="0 0 200 120" fill="none">
+          <rect width="200" height="120" fill="#e5e7eb"/>
+          <circle cx="70" cy="40" r="15" fill="#9ca3af"/>
+          <circle cx="130" cy="40" r="15" fill="#9ca3af"/>
+          <circle cx="100" cy="60" r="15" fill="#9ca3af"/>
+          <rect x="50" y="80" width="100" height="30" rx="4" fill="#d1d5db"/>
+        </svg>
+      </div>
+    </div>
+    <div class="tooltip-content">
+      <h3 class="tooltip-title">{{ currentEvent.title }}</h3>
+      <div class="tooltip-details">
+        <p class="tooltip-org">{{ currentEvent.organization }}</p>
+        <p class="tooltip-date">{{ currentEvent.date }}</p>
+        <p class="tooltip-time">{{ currentEvent.time }}</p>
+        <p class="tooltip-location">{{ currentEvent.location }}</p>
+      </div>
+      <div class="tooltip-attendees">
+        <div class="attendee-avatars">
+          <div class="avatar" *ngFor="let i of [1,2,3]"></div>
+          <div class="avatar-more">+{{ currentEvent.attendees }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Add Event Modal -->
+  <div *ngIf="showAddEventModal" class="modal-overlay" (click)="closeAddEventModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3 class="modal-title">Add New Event</h3>
+        <button class="modal-close" (click)="closeAddEventModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="addEvent()">
+          <div class="form-group">
+            <label for="eventTitle">Event Title *</label>
+            <input 
+              type="text" 
+              id="eventTitle" 
+              [(ngModel)]="newEvent.title" 
+              name="title"
+              class="form-input"
+              placeholder="Enter event title"
+              required
+            />
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="eventDate">Date *</label>
+              <input 
+                type="text" 
+                #dateInput
+                id="eventDate" 
+                [(ngModel)]="newEvent.date" 
+                name="date"
+                class="form-input"
+                placeholder="Select date"
+                required
+                readonly
+              />
+            </div>
+            
+            <div class="form-group">
+              <label for="eventTime">Time</label>
+              <input 
+                type="time" 
+                id="eventTime" 
+                [(ngModel)]="newEvent.time" 
+                name="time"
+                class="form-input"
+              />
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="eventLocation">Location</label>
+            <input 
+              type="text" 
+              id="eventLocation" 
+              [(ngModel)]="newEvent.location" 
+              name="location"
+              class="form-input"
+              placeholder="Enter location"
+            />
+          </div>
+          
+          <div class="form-group">
+            <label for="eventOrganization">Organization</label>
+            <input 
+              type="text" 
+              id="eventOrganization" 
+              [(ngModel)]="newEvent.organization" 
+              name="organization"
+              class="form-input"
+              placeholder="Enter organization"
+            />
+          </div>
+          
+          <div class="modal-actions">
+            <button type="button" class="btn-cancel" (click)="closeAddEventModal()">Cancel</button>
+            <button type="submit" class="btn-submit">Add Event</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+

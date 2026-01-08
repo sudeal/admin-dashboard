@@ -14,6 +14,7 @@ type MenuKey =
   | "todo-list"
   | "pricing"
   | "charts"
+  | "calendar"
   | "contact";
 
 type MenuItem = {
@@ -56,6 +57,7 @@ export class AdminSidebarComponent {
     { key: "contact", labelKey: "sidebar.contact", icon: "bi-people", route: "/contact" },
     { key: "pricing", labelKey: "sidebar.pricing", icon: "bi-gift", route: "/pricing" },
     { key: "charts", labelKey: "sidebar.charts", icon: "bi-bar-chart", route: "/charts" },
+    { key: "calendar", labelKey: "sidebar.calendar", icon: "bi-calendar", route: "/calendar" },
   ];
 
   // Eski setActive fonksiyonunu istersen silebilirsin.

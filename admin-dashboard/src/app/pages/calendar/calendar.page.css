@@ -1,0 +1,779 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.page {
+  width: 100%;
+  padding: clamp(12px, 1.5vw, 18px) clamp(16px, 2vw, 22px)
+    clamp(12px, 1.5vw, 18px);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+
+  /* ✅ height:100% tek başına yetmeyebilir, sayfayı ekrana yay */
+  min-height: calc(100vh - 70px);
+}
+
+.page__title {
+  margin: 0 0 20px 0;
+  font-size: clamp(22px, 2.6vw, 28px);
+  font-weight: 600;
+  color: var(--text, #1f2937);
+}
+
+/* Calendar Layout - Two Columns */
+.calendar-layout {
+  display: flex;
+  gap: 24px;
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  align-items: stretch;
+}
+
+/* Left Sidebar */
+.calendar-sidebar {
+  width: 380px;
+  flex-shrink: 0;
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+
+  /* ✅ sidebar kendi içinde kayabilsin */
+  overflow-y: auto;
+}
+
+.add-event-btn {
+  width: 100%;
+  background: #3b82f6;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 32px;
+  transition: background-color 0.2s;
+  flex-shrink: 0;
+}
+
+.add-event-btn:hover {
+  background: #2563eb;
+}
+
+.add-event-btn span {
+  font-size: 1.25rem;
+  font-weight: 400;
+}
+
+.section-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1f2937;
+  text-transform: none;
+  letter-spacing: 0;
+  margin: 0 0 16px 0;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.upcoming-events {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.event-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.event-item {
+  display: flex;
+  gap: 12px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.event-item:last-child {
+  border-bottom: none;
+}
+
+.event-image {
+  width: 80px;
+  height: 60px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.image-placeholder-small {
+  width: 100%;
+  height: 100%;
+  background: #f3f4f6;
+}
+
+.event-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.event-title {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+
+.event-date-time {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  margin-bottom: 4px;
+}
+
+.event-location {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-bottom: 4px;
+}
+
+.event-organization {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-bottom: 8px;
+}
+
+.event-attendees {
+  margin-top: 8px;
+}
+
+.attendee-avatars-small {
+  display: flex;
+  align-items: center;
+  gap: -6px;
+}
+
+.avatar-small {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: 2px solid #fff;
+  margin-left: -6px;
+}
+
+.avatar-small:nth-child(2) {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.avatar-small:nth-child(3) {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.avatar-small:first-child {
+  margin-left: 0;
+}
+
+.avatar-more-small {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #9ca3af;
+  border: 2px solid #fff;
+  margin-left: -6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 0.625rem;
+  font-weight: 600;
+}
+
+.see-more-btn {
+  width: auto;
+  min-width: 120px;
+  background: transparent;
+  color: #6b7280;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+  margin: 0 auto;
+  display: block;
+}
+
+.see-more-btn:hover {
+  background: #f3f4f6;
+  border-color: #d1d5db;
+  color: #374151;
+}
+
+/* Right Calendar */
+.calendar-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.calendar-container {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* ✅ FullCalendar’ın kartı tamamen doldurması */
+.calendar-container ::ng-deep .fc {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  height: 100%;
+}
+
+.calendar-container ::ng-deep .fc-view-harness {
+  flex: 1;
+  min-height: 0;
+  height: 100%;
+}
+
+/* ✅ Grid’in aşağıya kadar uzaması */
+.calendar-container ::ng-deep .fc-scrollgrid {
+  height: 100%;
+}
+
+/* ⚠️ Senin eklediğin “overflow:hidden” kısmı bazen takvimi kısaltıyor.
+   Onu kaldırıp doğal scroll davranışını bırakıyoruz. */
+.calendar-container ::ng-deep .fc-scroller {
+  overflow: auto !important; /* ✅ DÜZELTİLDİ */
+}
+
+/* Satırların yükseklik hissini dengeler (çok abartmadan) */
+.calendar-container ::ng-deep .fc-daygrid-day-frame {
+  min-height: clamp(90px, 10vh, 120px);
+}
+
+/* FullCalendar Custom Styles */
+::ng-deep .fc {
+  font-family: inherit;
+  background: #fff;
+}
+
+::ng-deep .fc-header-toolbar {
+  margin-bottom: 1.5em;
+  padding: 0.5em 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Beyaz Butonlar - Hover'da Mavi */
+::ng-deep .fc-button {
+  background-color: #fff !important;
+  border-color: #e5e7eb !important;
+  color: #374151 !important;
+  padding: 0.5em 1em;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 0.875rem;
+  text-transform: none;
+  box-shadow: none;
+  transition: all 0.2s ease;
+}
+
+::ng-deep .fc-button:hover {
+  background-color: #3b82f6 !important;
+  border-color: #3b82f6 !important;
+  color: #fff !important;
+}
+
+::ng-deep .fc-button-primary:not(:disabled):active,
+::ng-deep .fc-button-primary:not(:disabled).fc-button-active {
+  background-color: #3b82f6 !important;
+  border-color: #3b82f6 !important;
+  color: #fff !important;
+  box-shadow: none;
+}
+
+::ng-deep .fc-button-group > .fc-button {
+  border-radius: 0;
+  margin: 0;
+}
+
+::ng-deep .fc-button-group > .fc-button:first-child {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+
+::ng-deep .fc-button-group > .fc-button:last-child {
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+::ng-deep .fc-today-button {
+  border-radius: 4px;
+  margin-right: 8px;
+}
+
+/* Prev/Next Butonları - Ay Başlığının Yanında */
+::ng-deep .fc-prev-button,
+::ng-deep .fc-next-button {
+  border-radius: 4px;
+  margin: 0 8px;
+  background-color: #fff !important;
+  border-color: #e5e7eb !important;
+  color: #374151 !important;
+  padding: 0.25em 0.5em;
+  min-width: auto;
+}
+
+::ng-deep .fc-prev-button:hover,
+::ng-deep .fc-next-button:hover {
+  background-color: #3b82f6 !important;
+  border-color: #3b82f6 !important;
+  color: #fff !important;
+}
+
+/* Başlık Stili - Ok İşaretleriyle Birlikte */
+::ng-deep .fc-toolbar-chunk {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+::ng-deep .fc-toolbar-chunk.fc-toolbar-chunk-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+::ng-deep .fc-toolbar-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+  order: 2;
+}
+
+::ng-deep .fc-prev-button {
+  order: 1;
+}
+
+::ng-deep .fc-next-button {
+  order: 3;
+}
+
+/* Takvim Grid Çizgileri - Açık Gri */
+::ng-deep .fc-daygrid-day,
+::ng-deep .fc-col-header-cell {
+  border-color: #e5e7eb !important;
+  border-width: 1px;
+}
+
+::ng-deep .fc-scrollgrid {
+  border-color: #e5e7eb !important;
+}
+
+/* Gün Numaraları */
+::ng-deep .fc-daygrid-day-number {
+  padding: 8px;
+  color: #374151;
+  font-size: 0.875rem;
+  font-weight: 400;
+}
+
+/* Önceki/Sonraki Ay Tarihleri - Soluk ve Diagonal Pattern */
+::ng-deep .fc-daygrid-day.fc-day-other {
+  background-color: #f9fafb;
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    rgba(229, 231, 235, 0.3) 10px,
+    rgba(229, 231, 235, 0.3) 20px
+  );
+}
+
+::ng-deep .fc-daygrid-day.fc-day-other .fc-daygrid-day-number {
+  color: #9ca3af;
+  opacity: 0.6;
+}
+
+/* Hafta Günleri Başlıkları */
+::ng-deep .fc-col-header-cell {
+  padding: 12px 0;
+  font-weight: 600;
+  color: #374151;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background-color: #fff;
+}
+
+/* Gün Hücreleri */
+::ng-deep .fc-daygrid-day-frame {
+  background-color: #fff;
+}
+
+::ng-deep .fc-daygrid-day {
+  background-color: #fff;
+}
+
+/* Bugünün Tarihi */
+::ng-deep .fc-daygrid-day.fc-day-today {
+  background-color: #f0f9ff;
+}
+
+::ng-deep .fc-daygrid-day.fc-day-today .fc-daygrid-day-number {
+  font-weight: 600;
+  color: #3b82f6;
+}
+
+/* Event Stilleri */
+::ng-deep .fc-daygrid-event {
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+::ng-deep .fc-daygrid-event:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Event Tooltip/Modal */
+.event-tooltip {
+  position: fixed;
+  z-index: 1000;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  width: 320px;
+  overflow: hidden;
+  pointer-events: none;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tooltip-image {
+  width: 100%;
+  height: 150px;
+  background: #f3f4f6;
+  overflow: hidden;
+}
+
+.image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tooltip-content {
+  padding: 16px;
+}
+
+.tooltip-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 12px 0;
+}
+
+.tooltip-details {
+  margin-bottom: 16px;
+}
+
+.tooltip-org {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin: 0 0 4px 0;
+  font-weight: 500;
+}
+
+.tooltip-date {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  margin: 0 0 4px 0;
+  font-weight: 500;
+}
+
+.tooltip-time {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  margin: 0 0 4px 0;
+}
+
+.tooltip-location {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  margin: 0;
+}
+
+.tooltip-attendees {
+  display: flex;
+  align-items: center;
+  padding-top: 12px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.attendee-avatars {
+  display: flex;
+  align-items: center;
+  gap: -8px;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: 2px solid #fff;
+  margin-left: -8px;
+}
+
+.avatar:nth-child(2) {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.avatar:nth-child(3) {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.avatar:first-child {
+  margin-left: 0;
+}
+
+.avatar-more {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #3b82f6;
+  border: 2px solid #fff;
+  margin-left: -8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease;
+}
+
+.modal-content {
+  background: #fff;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.modal-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.modal-close:hover {
+  background: #f3f4f6;
+  color: #1f2937;
+}
+
+.modal-body {
+  padding: 24px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 8px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  color: #1f2937;
+  transition: all 0.2s;
+  box-sizing: border-box;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.btn-cancel,
+.btn-submit {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+}
+
+.btn-cancel {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.btn-cancel:hover {
+  background: #e5e7eb;
+}
+
+.btn-submit {
+  background: #3b82f6;
+  color: #fff;
+}
+
+.btn-submit:hover {
+  background: #2563eb;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .calendar-layout {
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .calendar-sidebar {
+    width: 100%;
+    max-height: 400px;
+  }
+
+  .calendar-main {
+    width: 100%;
+    flex: 1;
+    min-height: 500px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-content {
+    width: 95%;
+    max-width: none;
+  }
+}
