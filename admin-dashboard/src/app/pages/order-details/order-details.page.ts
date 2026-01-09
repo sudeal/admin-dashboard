@@ -42,8 +42,27 @@ export class OrderDetailsPage implements OnInit {
   ) {}
 
   translateStatus(status: string): string {
-    const statusKey = status.toLowerCase().replace(/\s+/g, '');
-    return this.translate.instant(`orderDetails.statuses.${statusKey}`) || status;
+    // Status'ü translation key formatına çevir (camelCase)
+    // "On Hold" -> "onHold", "In Transit" -> "inTransit", "Completed" -> "completed"
+    let statusKey = '';
+    if (status === 'On Hold') {
+      statusKey = 'onHold';
+    } else if (status === 'In Transit') {
+      statusKey = 'inTransit';
+    } else {
+      // Diğer status'ler için lowercase ve boşlukları kaldır
+      statusKey = status.toLowerCase().replace(/\s+/g, '');
+    }
+    
+    // Translation'ı al
+    const translated = this.translate.instant(`orderDetails.statuses.${statusKey}`);
+    
+    // Eğer translation bulunamazsa orijinal status'ü döndür
+    if (translated && translated !== `orderDetails.statuses.${statusKey}`) {
+      return translated;
+    }
+    
+    return status;
   }
 
   translatePayment(payment: string): string {

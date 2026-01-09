@@ -154,7 +154,7 @@
             <td class="muted">{{ row.date }}</td>
             <td class="muted">{{ row.type }}</td>
             <td class="td-status">
-              <span class="badge" [attr.data-status]="row.status">{{ row.status }}</span>
+              <span class="badge" [attr.data-status]="row.status">{{ translateStatus(row.status) }}</span>
             </td>
           </tr>
         </tbody>

@@ -1,43 +1,45 @@
 <div class="page">
   <h2 class="page__title">Calendar</h2>
+
   <div class="calendar-layout">
     <!-- Left Sidebar -->
     <aside class="calendar-sidebar">
       <button class="add-event-btn" (click)="openAddEventModal()">
         <span>+</span> Add New Event
       </button>
-      
+
       <div class="upcoming-events">
         <h3 class="section-title">You are going to</h3>
+
         <div class="event-list">
-          <div 
-            *ngFor="let event of upcomingEvents" 
-            class="event-item"
-          >
+          <div *ngFor="let event of upcomingEvents" class="event-item">
             <div class="event-image">
               <div class="image-placeholder-small">
                 <svg width="100%" height="100%" viewBox="0 0 80 60" fill="none">
-                  <rect width="80" height="60" fill="#e5e7eb"/>
-                  <circle cx="30" cy="20" r="8" fill="#9ca3af"/>
-                  <circle cx="50" cy="20" r="8" fill="#9ca3af"/>
-                  <circle cx="40" cy="35" r="8" fill="#9ca3af"/>
+                  <rect width="80" height="60" fill="#e5e7eb" />
+                  <circle cx="30" cy="20" r="8" fill="#9ca3af" />
+                  <circle cx="50" cy="20" r="8" fill="#9ca3af" />
+                  <circle cx="40" cy="35" r="8" fill="#9ca3af" />
                 </svg>
               </div>
             </div>
+
             <div class="event-info">
               <div class="event-title">{{ event.title }}</div>
               <div class="event-date-time">{{ event.dateTime }}</div>
               <div class="event-location">{{ event.location }}</div>
               <div class="event-organization">{{ event.organization }}</div>
+
               <div class="event-attendees">
                 <div class="attendee-avatars-small">
-                  <div class="avatar-small" *ngFor="let i of [1,2,3]"></div>
+                  <div class="avatar-small" *ngFor="let i of [1, 2, 3]"></div>
                   <div class="avatar-more-small">{{ event.attendees }}+</div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+
         <button class="see-more-btn">See More</button>
       </div>
     </aside>
@@ -49,72 +51,115 @@
       </div>
     </div>
   </div>
-  
-  <!-- Event Tooltip/Modal -->
-  <div 
-    *ngIf="tooltipVisible && currentEvent" 
+
+  <!-- Event Tooltip -->
+  <div
+    *ngIf="tooltipVisible && currentEvent"
     class="event-tooltip"
-    [style.left.px]="tooltipX + 10"
-    [style.top.px]="tooltipY + 10"
+    [style.left.px]="tooltipX"
+    [style.top.px]="tooltipY"
+    (mouseenter)="onTooltipEnter()"
+    (mouseleave)="onTooltipLeave()"
   >
     <div class="tooltip-image">
       <div class="image-placeholder">
         <svg width="100%" height="100%" viewBox="0 0 200 120" fill="none">
-          <rect width="200" height="120" fill="#e5e7eb"/>
-          <circle cx="70" cy="40" r="15" fill="#9ca3af"/>
-          <circle cx="130" cy="40" r="15" fill="#9ca3af"/>
-          <circle cx="100" cy="60" r="15" fill="#9ca3af"/>
-          <rect x="50" y="80" width="100" height="30" rx="4" fill="#d1d5db"/>
+          <rect width="200" height="120" fill="#e5e7eb" />
+          <circle cx="70" cy="40" r="15" fill="#9ca3af" />
+          <circle cx="130" cy="40" r="15" fill="#9ca3af" />
+          <circle cx="100" cy="60" r="15" fill="#9ca3af" />
+          <rect x="50" y="80" width="100" height="30" rx="4" fill="#d1d5db" />
         </svg>
       </div>
     </div>
+
     <div class="tooltip-content">
-      <h3 class="tooltip-title">{{ currentEvent.title }}</h3>
+      <div class="tooltip-header">
+        <h3 class="tooltip-title">{{ currentEvent.title }}</h3>
+
+        <button
+          class="tooltip-delete-btn"
+          (click)="deleteEvent($event)"
+          title="Delete event"
+        >
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M3 6H5H21M8 6V4C8 3.46957 8.21071 2.96086 8.58579 2.58579C8.96086 2.21071 9.46957 2 10 2H14C14.5304 2 15.0391 2.21071 15.4142 2.58579C15.7893 2.96086 16 3.46957 16 4V6M19 6V20C19 20.5304 18.7893 21.0391 18.4142 21.4142C18.0391 21.7893 17.5304 22 17 22H7C6.46957 22 5.96086 21.7893 5.58579 21.4142C5.21071 21.0391 5 20.5304 5 20V6H19Z"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M10 11V17M14 11V17"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
+      </div>
+
       <div class="tooltip-details">
         <p class="tooltip-org">{{ currentEvent.organization }}</p>
         <p class="tooltip-date">{{ currentEvent.date }}</p>
         <p class="tooltip-time">{{ currentEvent.time }}</p>
         <p class="tooltip-location">{{ currentEvent.location }}</p>
       </div>
+
       <div class="tooltip-attendees">
         <div class="attendee-avatars">
-          <div class="avatar" *ngFor="let i of [1,2,3]"></div>
+          <div class="avatar" *ngFor="let i of [1, 2, 3]"></div>
           <div class="avatar-more">+{{ currentEvent.attendees }}</div>
         </div>
       </div>
     </div>
   </div>
-  
+
   <!-- Add Event Modal -->
-  <div *ngIf="showAddEventModal" class="modal-overlay" (click)="closeAddEventModal()">
+  <div
+    *ngIf="showAddEventModal"
+    class="modal-overlay"
+    (click)="closeAddEventModal()"
+  >
     <div class="modal-content" (click)="$event.stopPropagation()">
       <div class="modal-header">
         <h3 class="modal-title">Add New Event</h3>
-        <button class="modal-close" (click)="closeAddEventModal()">&times;</button>
+        <button class="modal-close" (click)="closeAddEventModal()">
+          &times;
+        </button>
       </div>
+
       <div class="modal-body">
         <form (ngSubmit)="addEvent()">
           <div class="form-group">
             <label for="eventTitle">Event Title *</label>
-            <input 
-              type="text" 
-              id="eventTitle" 
-              [(ngModel)]="newEvent.title" 
+            <input
+              type="text"
+              id="eventTitle"
+              [(ngModel)]="newEvent.title"
               name="title"
               class="form-input"
               placeholder="Enter event title"
               required
             />
           </div>
-          
+
           <div class="form-row">
             <div class="form-group">
               <label for="eventDate">Date *</label>
-              <input 
-                type="text" 
+              <input
+                type="text"
                 #dateInput
-                id="eventDate" 
-                [(ngModel)]="newEvent.date" 
+                id="eventDate"
+                [(ngModel)]="newEvent.date"
                 name="date"
                 class="form-input"
                 placeholder="Select date"
@@ -122,45 +167,51 @@
                 readonly
               />
             </div>
-            
+
             <div class="form-group">
               <label for="eventTime">Time</label>
-              <input 
-                type="time" 
-                id="eventTime" 
-                [(ngModel)]="newEvent.time" 
+              <input
+                type="time"
+                id="eventTime"
+                [(ngModel)]="newEvent.time"
                 name="time"
                 class="form-input"
               />
             </div>
           </div>
-          
+
           <div class="form-group">
             <label for="eventLocation">Location</label>
-            <input 
-              type="text" 
-              id="eventLocation" 
-              [(ngModel)]="newEvent.location" 
+            <input
+              type="text"
+              id="eventLocation"
+              [(ngModel)]="newEvent.location"
               name="location"
               class="form-input"
               placeholder="Enter location"
             />
           </div>
-          
+
           <div class="form-group">
             <label for="eventOrganization">Organization</label>
-            <input 
-              type="text" 
-              id="eventOrganization" 
-              [(ngModel)]="newEvent.organization" 
+            <input
+              type="text"
+              id="eventOrganization"
+              [(ngModel)]="newEvent.organization"
               name="organization"
               class="form-input"
               placeholder="Enter organization"
             />
           </div>
-          
+
           <div class="modal-actions">
-            <button type="button" class="btn-cancel" (click)="closeAddEventModal()">Cancel</button>
+            <button
+              type="button"
+              class="btn-cancel"
+              (click)="closeAddEventModal()"
+            >
+              Cancel
+            </button>
             <button type="submit" class="btn-submit">Add Event</button>
           </div>
         </form>
@@ -168,4 +219,3 @@
     </div>
   </div>
 </div>
-

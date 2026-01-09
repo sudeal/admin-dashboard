@@ -1,4 +1,11 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  AfterViewInit,
+  HostListener,
+} from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { FullCalendarModule, FullCalendarComponent } from "@fullcalendar/angular";
@@ -41,7 +48,21 @@ export class CalendarPage implements OnInit, AfterViewInit {
   tooltipX = 0;
   tooltipY = 0;
   currentEvent: EventDetail | null = null;
+
+  // ✅ silme için id
+  currentEventId: string | null = null;
+
   showAddEventModal = false;
+
+  // Tooltip sabitleme referansları
+  private baseClientX = 0;
+  private baseClientY = 0;
+  private baseScrollX = 0;
+  private baseScrollY = 0;
+
+  // ✅ tooltip’e geçerken kapanmasın
+  private isHoveringTooltip = false;
+  private hideTooltipTimer: any = null;
 
   newEvent = {
     title: "",
@@ -65,34 +86,66 @@ export class CalendarPage implements OnInit, AfterViewInit {
     this.calendarOptions.events = this.events;
     this.loadEventsFromStorage();
   }
-  
-  ngAfterViewInit() {
-    // Flatpickr will be initialized when modal opens
+
+  ngAfterViewInit() {}
+
+  // Tooltip scroll’da sabit kalsın
+  @HostListener("window:scroll")
+  onWindowScroll() {
+    if (!this.tooltipVisible) return;
+
+    const dx = window.scrollX - this.baseScrollX;
+    const dy = window.scrollY - this.baseScrollY;
+
+    this.tooltipX = this.baseClientX - dx;
+    this.tooltipY = this.baseClientY - dy;
   }
-  
+
+  onTooltipEnter() {
+    this.isHoveringTooltip = true;
+    if (this.hideTooltipTimer) {
+      clearTimeout(this.hideTooltipTimer);
+      this.hideTooltipTimer = null;
+    }
+  }
+
+  onTooltipLeave() {
+    this.isHoveringTooltip = false;
+    this.hideTooltipWithDelay();
+  }
+
+  private hideTooltipWithDelay() {
+    if (this.hideTooltipTimer) clearTimeout(this.hideTooltipTimer);
+
+    this.hideTooltipTimer = setTimeout(() => {
+      // tooltip üstünde değilse kapat
+      if (!this.isHoveringTooltip) {
+        this.tooltipVisible = false;
+        this.currentEvent = null;
+        this.currentEventId = null;
+      }
+    }, 200); // ✅ hover’dan tooltip’e geçmeye yetecek süre
+  }
+
+  private generateId(): string {
+    if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
+      return crypto.randomUUID();
+    }
+    return `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+  }
+
   initFlatpickr() {
     if (this.dateInputRef?.nativeElement && !this.flatpickrInstance) {
       this.flatpickrInstance = flatpickr(this.dateInputRef.nativeElement, {
         dateFormat: "Y-m-d",
         defaultDate: this.newEvent.date || new Date(),
-        locale: {
-          firstDayOfWeek: 0,
-          weekdays: {
-            shorthand: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-            longhand: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-          },
-          months: {
-            shorthand: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-            longhand: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-          }
-        } as any,
-        onChange: (selectedDates, dateStr) => {
+        onChange: (_selectedDates, dateStr) => {
           this.newEvent.date = dateStr;
-        }
+        },
       });
     }
   }
-  
+
   destroyFlatpickr() {
     if (this.flatpickrInstance) {
       this.flatpickrInstance.destroy();
@@ -105,11 +158,8 @@ export class CalendarPage implements OnInit, AfterViewInit {
     const today = new Date();
     this.newEvent.date = today.toISOString().split("T")[0];
     this.newEvent.time = "09:00";
-    
-    // Initialize flatpickr after view updates
-    setTimeout(() => {
-      this.initFlatpickr();
-    }, 0);
+
+    setTimeout(() => this.initFlatpickr(), 0);
   }
 
   closeAddEventModal() {
@@ -144,7 +194,10 @@ export class CalendarPage implements OnInit, AfterViewInit {
     const hour12 = parseInt(hours) % 12 || 12;
     const formattedTime = `${hour12}:${minutes} ${ampm}`;
 
+    const id = this.generateId();
+
     const newEvent: EventInput = {
+      id,
       title: this.newEvent.title,
       start: this.newEvent.date,
       backgroundColor: color.bg,
@@ -157,7 +210,7 @@ export class CalendarPage implements OnInit, AfterViewInit {
       },
     };
 
-    this.events.push(newEvent);
+    this.events = [...this.events, newEvent];
     this.saveEventsToStorage();
     this.updateCalendarEvents();
     this.closeAddEventModal();
@@ -171,11 +224,13 @@ export class CalendarPage implements OnInit, AfterViewInit {
     const stored = localStorage.getItem("calendarEvents");
     if (stored) {
       try {
-        const parsedEvents = JSON.parse(stored);
-        this.events = parsedEvents;
+        const parsed: EventInput[] = JSON.parse(stored);
+        // id yoksa ekle
+        this.events = parsed.map((e) => ({ ...e, id: (e as any).id ?? this.generateId() }));
+        this.saveEventsToStorage();
         this.updateCalendarEvents();
       } catch (e) {
-        console.error("Error loading events from storage:", e);
+        console.error("Error loading events:", e);
       }
     } else {
       this.saveEventsToStorage();
@@ -188,8 +243,10 @@ export class CalendarPage implements OnInit, AfterViewInit {
       events: [...this.events],
     };
 
-    if (this.fullCalendarComponent?.getApi()) {
-      this.fullCalendarComponent.getApi().refetchEvents();
+    const api = this.fullCalendarComponent?.getApi?.();
+    if (api) {
+      api.removeAllEvents();
+      api.addEventSource([...this.events]);
     }
   }
 
@@ -197,10 +254,9 @@ export class CalendarPage implements OnInit, AfterViewInit {
     return this.events.map((event, index) => {
       const startDate = event.start ? new Date(event.start as string) : new Date();
       const endDate = event.end ? new Date(event.end as string) : null;
-      const extendedProps = event.extendedProps as any;
+      const extendedProps = (event.extendedProps as any) || {};
 
       let dateTime: string;
-
       if (index === 0) {
         dateTime = `Today ${extendedProps.time || ""}`;
       } else if (endDate) {
@@ -218,24 +274,20 @@ export class CalendarPage implements OnInit, AfterViewInit {
         })} at ${extendedProps.time || ""}`;
       }
 
-      const organizationMap: { [key: string]: string } = {
-        "Design Conference": "Meaghanberg",
-        "Weekend Festival": "Sweden",
-        "Glastonbury Festival": index === 2 ? "Turks and Caicos Islands" : "San Marino",
-      };
-
       return {
         title: event.title as string,
         dateTime: dateTime.trim(),
         location: extendedProps.location || "TBA",
-        organization: organizationMap[event.title as string] || extendedProps.organization || "",
+        organization: extendedProps.organization || "",
         attendees: extendedProps.attendees || 0,
       };
     });
   }
 
+  // başlangıç eventleri
   events: EventInput[] = [
     {
+      id: "seed-1",
       title: "Design Conference",
       start: "2026-01-08",
       end: "2026-01-09",
@@ -249,6 +301,7 @@ export class CalendarPage implements OnInit, AfterViewInit {
       },
     },
     {
+      id: "seed-2",
       title: "Weekend Festival",
       start: "2026-01-15",
       backgroundColor: "#ec4899",
@@ -261,6 +314,7 @@ export class CalendarPage implements OnInit, AfterViewInit {
       },
     },
     {
+      id: "seed-3",
       title: "Glastonbury Festival",
       start: "2026-01-22",
       end: "2026-01-24",
@@ -274,6 +328,7 @@ export class CalendarPage implements OnInit, AfterViewInit {
       },
     },
     {
+      id: "seed-4",
       title: "Glastonbury Festival",
       start: "2026-01-28",
       backgroundColor: "#3b82f6",
@@ -301,22 +356,18 @@ export class CalendarPage implements OnInit, AfterViewInit {
       week: "Week",
       day: "Day",
     },
-
-    // ✅ BOŞLUK KAPATMA (eklenen)
     height: "100%",
-    //contentHeight: "auto",
     expandRows: true,
-
     events: [],
     initialDate: "2026-01-01",
     dayMaxEvents: true,
-    weekends: true,
-    editable: false,
-    selectable: false,
 
     eventMouseEnter: (info) => {
       const event = info.event;
       const extendedProps = event.extendedProps as any;
+
+      this.currentEventId = event.id || null;
+
       const startDate = event.start ? new Date(event.start) : new Date();
       const endDate = event.end ? new Date(event.end) : null;
 
@@ -324,20 +375,7 @@ export class CalendarPage implements OnInit, AfterViewInit {
       if (endDate) {
         const actualEndDate = new Date(endDate);
         actualEndDate.setDate(actualEndDate.getDate() - 1);
-
-        if (actualEndDate.getTime() !== startDate.getTime()) {
-          const startDay = startDate.getDate();
-          const endDay = actualEndDate.getDate();
-          const month = startDate.toLocaleDateString("en-US", { month: "long" });
-          const year = startDate.getFullYear();
-          formattedDate = `${month} ${startDay}-${endDay}, ${year}`;
-        } else {
-          formattedDate = startDate.toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-          });
-        }
+        formattedDate = `${startDate.toLocaleDateString("en-US", { month: "long" })} ${startDate.getDate()}-${actualEndDate.getDate()}, ${startDate.getFullYear()}`;
       } else {
         formattedDate = startDate.toLocaleDateString("en-US", {
           month: "long",
@@ -355,29 +393,64 @@ export class CalendarPage implements OnInit, AfterViewInit {
         attendees: extendedProps.attendees || 0,
       };
 
+      // tooltip sabit referansı
       const x = info.jsEvent.clientX;
       const y = info.jsEvent.clientY;
+
+      this.baseClientX = x;
+      this.baseClientY = y;
+      this.baseScrollX = window.scrollX;
+      this.baseScrollY = window.scrollY;
+
       const tooltipWidth = 320;
       const tooltipHeight = 300;
+      const offset = 12;
 
-      if (x + tooltipWidth + 20 > window.innerWidth) {
-        this.tooltipX = x - tooltipWidth - 20;
-      } else {
-        this.tooltipX = x + 10;
-      }
+      let tx = x + offset;
+      let ty = y + offset;
 
-      if (y + tooltipHeight + 20 > window.innerHeight) {
-        this.tooltipY = y - tooltipHeight - 20;
-      } else {
-        this.tooltipY = y + 10;
-      }
+      if (tx + tooltipWidth + 10 > window.innerWidth) tx = x - tooltipWidth - offset;
+      if (ty + tooltipHeight + 10 > window.innerHeight) ty = y - tooltipHeight - offset;
 
+      this.tooltipX = tx;
+      this.tooltipY = ty;
       this.tooltipVisible = true;
     },
 
     eventMouseLeave: () => {
-      this.tooltipVisible = false;
-      this.currentEvent = null;
+      // ✅ hemen kapatma, tooltip’e geçme şansı ver
+      this.hideTooltipWithDelay();
     },
   };
+
+  deleteEvent(ev?: MouseEvent) {
+    // ✅ tooltip kapanma/leave olaylarını engelle
+    ev?.stopPropagation();
+    ev?.preventDefault();
+
+    if (!this.currentEventId) return;
+
+    const id = this.currentEventId;
+
+    // 1) array’den sil
+    this.events = this.events.filter((e) => (e as any).id !== id);
+
+    // 2) storage
+    this.saveEventsToStorage();
+
+    // 3) calendar api’den de kaldır (en garanti)
+    const api = this.fullCalendarComponent?.getApi?.();
+    if (api) {
+      const fcEvent = api.getEventById(id);
+      fcEvent?.remove();
+    }
+
+    // 4) yeniden kaynakla (sol kart da update)
+    this.updateCalendarEvents();
+
+    // 5) tooltip kapat
+    this.tooltipVisible = false;
+    this.currentEvent = null;
+    this.currentEventId = null;
+  }
 }

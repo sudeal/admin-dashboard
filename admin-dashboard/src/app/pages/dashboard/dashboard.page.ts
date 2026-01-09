@@ -7,7 +7,7 @@ import { StatCard } from "../../shared/models/stat-card.model";
 import { StatCardsComponent } from "../../shared/models/components/stat-cards/stat-cards.component";
 import { SalesDetail } from "./sales-detail.model";
 
-// ✅ Chart.js
+
 import { Chart } from "chart.js/auto";
 
 @Component({
@@ -23,12 +23,12 @@ export class DashboardPage implements OnInit, OnDestroy {
 
   private dealsChartInstance: Chart | null = null;
 
-  // ✅ Canvas DOM'a geldiği an burası çalışır
+  
   @ViewChild("dealsChart")
   set dealsChartRef(ref: ElementRef<HTMLCanvasElement> | undefined) {
     if (!ref) return;
 
-    // chart varsa önce temizle
+    
     this.dealsChartInstance?.destroy();
 
     const ctx = ref.nativeElement.getContext("2d");
@@ -59,7 +59,7 @@ export class DashboardPage implements OnInit, OnDestroy {
       },
       options: {
         responsive: true,
-        maintainAspectRatio: false, // ✅ panel yüksekliğini kullan
+        maintainAspectRatio: false, 
         plugins: {
           legend: { display: true },
           tooltip: { enabled: true },
@@ -100,8 +100,44 @@ export class DashboardPage implements OnInit, OnDestroy {
   }
 
   translateStatus(status: string): string {
-    const statusKey = status.toLowerCase().replace(/\s+/g, "");
-    return this.translate.instant(`orderLists.orderStatuses.${statusKey}`) || status;
+    // Eğer status translation key formatında geliyorsa (ts.orderStatuses gibi), düzelt
+    if (status.includes('orderStatuses') || status.startsWith('ts.')) {
+      // "ts.orderStatuses" veya "ts.orderStatuses." gibi değerleri düzelt
+      // Bu değerler muhtemelen "On Hold" veya "In Transit" olmalı
+      const statusFixMap: { [key: string]: string } = {
+        'ts.orderStatuses': 'On Hold',
+        'ts.orderStatuses.': 'In Transit',
+        'orderStatuses': 'On Hold',
+        'orderStatuses.': 'In Transit',
+      };
+      
+      const normalizedKey = status.trim();
+      if (statusFixMap[normalizedKey]) {
+        status = statusFixMap[normalizedKey];
+      }
+    }
+    
+    // Status'ü translation key formatına çevir (camelCase)
+    // "On Hold" -> "onHold", "In Transit" -> "inTransit", "Completed" -> "completed"
+    let statusKey = '';
+    if (status === 'On Hold') {
+      statusKey = 'onHold';
+    } else if (status === 'In Transit') {
+      statusKey = 'inTransit';
+    } else {
+      // Diğer status'ler için lowercase ve boşlukları kaldır
+      statusKey = status.toLowerCase().replace(/\s+/g, "");
+    }
+    
+    // Translation'ı al
+    const translated = this.translate.instant(`orderLists.orderStatuses.${statusKey}`);
+    
+    // Eğer translation bulunamazsa orijinal status'ü döndür
+    if (translated && translated !== `orderLists.orderStatuses.${statusKey}`) {
+      return translated;
+    }
+    
+    return status;
   }
 
   translateProduct(productName: string): string {

@@ -49,6 +49,30 @@ export class OrderListsPage implements OnInit, AfterViewInit {
     });
   }
 
+  translateStatus(status: string): string {
+    // Status'ü translation key formatına çevir (camelCase)
+    // "On Hold" -> "onHold", "In Transit" -> "inTransit", "Completed" -> "completed"
+    let statusKey = '';
+    if (status === 'On Hold') {
+      statusKey = 'onHold';
+    } else if (status === 'In Transit') {
+      statusKey = 'inTransit';
+    } else {
+      // Diğer status'ler için lowercase ve boşlukları kaldır
+      statusKey = status.toLowerCase().replace(/\s+/g, '');
+    }
+    
+    // Translation'ı al
+    const translated = this.translate.instant(`orderLists.orderStatuses.${statusKey}`);
+    
+    // Eğer translation bulunamazsa orijinal status'ü döndür
+    if (translated && translated !== `orderLists.orderStatuses.${statusKey}`) {
+      return translated;
+    }
+    
+    return status;
+  }
+
   private updateLabels() {
     this.appliedLabel = this.translate.instant('orderLists.date');
     this.orderTypeLabel = this.translate.instant('orderLists.orderType');
