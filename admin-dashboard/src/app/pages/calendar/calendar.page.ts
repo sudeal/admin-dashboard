@@ -49,18 +49,18 @@ export class CalendarPage implements OnInit, AfterViewInit {
   tooltipY = 0;
   currentEvent: EventDetail | null = null;
 
-  // ✅ silme için id
+  
   currentEventId: string | null = null;
 
   showAddEventModal = false;
 
-  // Tooltip sabitleme referansları
+
   private baseClientX = 0;
   private baseClientY = 0;
   private baseScrollX = 0;
   private baseScrollY = 0;
 
-  // ✅ tooltip’e geçerken kapanmasın
+  
   private isHoveringTooltip = false;
   private hideTooltipTimer: any = null;
 
@@ -85,11 +85,53 @@ export class CalendarPage implements OnInit, AfterViewInit {
   ngOnInit() {
     this.calendarOptions.events = this.events;
     this.loadEventsFromStorage();
+    this.updateCalendarResponsive();
   }
 
-  ngAfterViewInit() {}
+  ngAfterViewInit() {
+    this.updateCalendarResponsive();
+  }
 
-  // Tooltip scroll’da sabit kalsın
+  @HostListener("window:resize")
+  onResize() {
+    this.updateCalendarResponsive();
+  }
+
+  private updateCalendarResponsive() {
+    const width = window.innerWidth;
+    
+    if (width <= 480) {
+      
+      this.calendarOptions.headerToolbar = {
+        left: "",
+        center: "prev title next",
+        right: "today",
+      };
+    } else if (width <= 768) {
+      this.calendarOptions.headerToolbar = {
+        left: "today",
+        center: "prev title next",
+        right: "dayGridMonth,timeGridWeek",
+      };
+    } else {
+      
+      this.calendarOptions.headerToolbar = {
+        left: "today",
+        center: "prev title next",
+        right: "dayGridMonth,timeGridWeek,timeGridDay",
+      };
+    }
+
+    
+    if (this.fullCalendarComponent) {
+      const api = this.fullCalendarComponent?.getApi?.();
+      if (api) {
+        api.setOption("headerToolbar", this.calendarOptions.headerToolbar);
+      }
+    }
+  }
+
+  
   @HostListener("window:scroll")
   onWindowScroll() {
     if (!this.tooltipVisible) return;
@@ -118,13 +160,13 @@ export class CalendarPage implements OnInit, AfterViewInit {
     if (this.hideTooltipTimer) clearTimeout(this.hideTooltipTimer);
 
     this.hideTooltipTimer = setTimeout(() => {
-      // tooltip üstünde değilse kapat
+    
       if (!this.isHoveringTooltip) {
         this.tooltipVisible = false;
         this.currentEvent = null;
         this.currentEventId = null;
       }
-    }, 200); // ✅ hover’dan tooltip’e geçmeye yetecek süre
+    }, 200); 
   }
 
   private generateId(): string {
@@ -225,7 +267,7 @@ export class CalendarPage implements OnInit, AfterViewInit {
     if (stored) {
       try {
         const parsed: EventInput[] = JSON.parse(stored);
-        // id yoksa ekle
+        
         this.events = parsed.map((e) => ({ ...e, id: (e as any).id ?? this.generateId() }));
         this.saveEventsToStorage();
         this.updateCalendarEvents();
@@ -284,7 +326,7 @@ export class CalendarPage implements OnInit, AfterViewInit {
     });
   }
 
-  // başlangıç eventleri
+  
   events: EventInput[] = [
     {
       id: "seed-1",
@@ -393,7 +435,7 @@ export class CalendarPage implements OnInit, AfterViewInit {
         attendees: extendedProps.attendees || 0,
       };
 
-      // tooltip sabit referansı
+     
       const x = info.jsEvent.clientX;
       const y = info.jsEvent.clientY;
 
@@ -418,13 +460,13 @@ export class CalendarPage implements OnInit, AfterViewInit {
     },
 
     eventMouseLeave: () => {
-      // ✅ hemen kapatma, tooltip’e geçme şansı ver
+     
       this.hideTooltipWithDelay();
     },
   };
 
   deleteEvent(ev?: MouseEvent) {
-    // ✅ tooltip kapanma/leave olaylarını engelle
+    
     ev?.stopPropagation();
     ev?.preventDefault();
 
@@ -432,23 +474,23 @@ export class CalendarPage implements OnInit, AfterViewInit {
 
     const id = this.currentEventId;
 
-    // 1) array’den sil
+    
     this.events = this.events.filter((e) => (e as any).id !== id);
 
-    // 2) storage
+   
     this.saveEventsToStorage();
 
-    // 3) calendar api’den de kaldır (en garanti)
+    
     const api = this.fullCalendarComponent?.getApi?.();
     if (api) {
       const fcEvent = api.getEventById(id);
       fcEvent?.remove();
     }
 
-    // 4) yeniden kaynakla (sol kart da update)
+    
     this.updateCalendarEvents();
 
-    // 5) tooltip kapat
+    
     this.tooltipVisible = false;
     this.currentEvent = null;
     this.currentEventId = null;
